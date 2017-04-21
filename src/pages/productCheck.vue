@@ -12,9 +12,9 @@
 				</thead>
 				<tbody class="f24">
 					<tr v-for="item in items">
-						<td><div class="box">{{ item.name }}</div></td>
-						<td>{{ item.rest }}</td>
-						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.rest" /><a class="add" @click="add(item)"></a></td>
+						<td><div class="box">{{ item.ProductName }}</div></td>
+						<td>{{ item.RemainderAmount }}</td>
+						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.RecommendOnShelvesAmount" :value="item.RemainderAmount" /><a class="add" @click="add(item)"></a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -34,6 +34,7 @@
 		data(){
 			return {
 				showMe: true,
+				allItems: [],
 				items: []
 			}
 		},
@@ -41,44 +42,35 @@
 			search
 		},
 		computed: mapState({
-			name: state => state.shop.name,
-			user: state => state.shop.user
+			name: state => state.shop.name
 		  }),
 		  watch: {
 		  	name: function(){
-		  		this.GetProductList();
-		  	},
-		  	user: function(){
 		  		this.GetProductList();
 		  	}
 		},
 		methods: {
 			add(item){
-				item.count ++;
+				item.RecommendOnShelvesAmount ++;
 			},
 			sub(item){
-				item.count>0 && item.count--;
+				item.RecommendOnShelvesAmount>0 && item.RecommendOnShelvesAmount--;
 			},
 			GetProductList(){
-				// Request.GetProductList({
-				// 	name: this.name,
-				// 	id: this.user.id
-				// }).then((data)=>{
-				// 	this.items = data;
-				// });
-				this.items = [{
-					id: 1, 
-					name: "健力宝",
-					rest: 4
-				},{
-					id: 2,
-					name: "红牛",
-					rest: 5
-				}];
+				this.items = this.allItems.filter(function(x){
+					return x.ProductName.indexOf(this.name)>-1
+				}.bind(this));
 			}
 		},
 		created(){
-			this.GetProductList();
+			this.id = this.$route.query.id;
+			Request.CheckStoreProducts({
+				shopid: this.id
+			}).then((data)=>{
+				this.allItems = data;
+				this.items = data;
+				this.GetProductList();
+			});
 		}
 	}
 </script>

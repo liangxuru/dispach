@@ -48,32 +48,26 @@
 				shelves: false,
 				info: {},
 				OperationType: 2,
-				id: 0
+				id: 0,
+				items: []
 			}
 		},
 		components: {
 			search
 		},
+		computed: mapState({
+			name: state => state.shop.name
+		}),
+		watch: {
+		  name: function(){
+		  	this.GetProductList();
+		  }
+		},
 		methods: {
 			GetProductList(){
-				// Request.GetProductList({
-				// 	name: this.name,
-				// 	id: this.user.id,
-				// 	spid: this.id
-				// }).then((data)=>{
-				// 	this.items = data;
-				// });
-				this.items = [{
-					ProductId: 1, 
-					ProductName: "健力宝",
-					FullAmount: 4,
-					RemainderAmount: 4
-				},{
-					ProductId: 2,
-					ProductName: "红牛",
-					FullAmount: 5,
-					RemainderAmount: 5
-				}];
+				this.items = this.items.filter(function(x){
+					return x.ProductName.indexOf(this.name)>-1
+				}.bind(this));
 			},
 			Offshelves(item){
 				//下架
@@ -99,7 +93,13 @@
 		},
 		created(){
 			this.id = this.$route.query.id;
-			this.GetProductList();
+			Request.DeliverProducts({
+				shopid: this.id,
+				pickTime: new Date()
+			}).then((data)=>{
+				this.items = data;
+				this.GetProductList();
+			});
 		}
 	}
 </script>

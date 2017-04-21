@@ -47,27 +47,22 @@
 		},
 		methods: {
 			GetDistanceList(){
-				this.items = [{
-					ShopId: 1,
-					ShopName: '诚信小铺中航技三层店',
-					Surplus: '57%',
-					Distance: 578,
-					DeliveryStatus: 0
-				},{
-					ShopId: 2,
-					ShopName: '诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店',
-					Surplus: '47%',
-					Distance: 578,
-					DeliveryStatus: 1
-				}];
-				// Request.GetDistanceList({
-				// 	name: this.name,
-				// 	id: this.user.id,
-				// 	Latitude: this.x,
-				// 	Longitude: this.y
-				// }).then((data)=>{
-				// 	this.items = data;
-				// });
+				// this.items = [{
+				// 	ShopId: 1,
+				// 	ShopName: '诚信小铺中航技三层店',
+				// 	Surplus: '57%',
+				// 	Distance: 578,
+				// 	DeliveryStatus: 0
+				// },{
+				// 	ShopId: 2,
+				// 	ShopName: '诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店',
+				// 	Surplus: '47%',
+				// 	Distance: 578,
+				// 	DeliveryStatus: 1
+				// }];
+				Request.GetDistanceList().then((data)=>{
+					this.items = data;
+				});
 			},
 			select(item){
 				this.$router.replace({path: '/shopInfo', query: { id: item.ShopId }});

@@ -109,3 +109,28 @@ body{
     border-top: 1px solid #d8d8d8;
     padding: .4rem;
 }
+.message-box-success,.message-box-error{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    color: #fff;
+    background-color: rgba(0,0,0,.5);
+    font-size: 14px;
+    padding: 10px 35px 10px 35px;
+    border-radius: 3px;
+    box-shadow: 0 0 15px rgba(0,0,0,.5);
+    opacity: 1;
+    transition: opacity 3s;
+    z-index: 5000;
+}
+.message-box-success{
+    max-width: 250px;
+    background-color: #42BB11;
+}
+.message-box-error{
+    max-width: 250px;
+    background-color: rgba(0,0,0,.5);
+}
+.message-box-hide{
+    opacity: 0;
+}

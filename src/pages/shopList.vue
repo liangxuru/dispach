@@ -16,7 +16,7 @@
 						<td><div class="box">{{ item.ShopName }}</div></td>
 						<td>{{ item.TotalAmount | currency }}</td>
 						<td>{{ date(item.PickTime) }}<br/>{{ time(item.PickTime) }}</td>
-						<td><a class="btn-sm f26" v-bind:href="`#/productList?id=${item.ShopId}`">捡货</a></td>
+						<td><a class="btn-sm f26" v-bind:href="`#/productList?id=${item.ShopId}&time=${item.PickTime}`">捡货</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -32,6 +32,7 @@ export default {
   data () {
     return {
 	    showMe: true,
+	    allItems: [],
 	    items: [],
 	    current: { key: '', value: 0}
     }
@@ -53,28 +54,9 @@ export default {
   },
   methods: {
   	 GetShopList(){
-  	 	// Request.GetShopList({
-  	 	// 	name: this.name,
-  	 	// 	id: this.user.id
-  	 	// }).then((data)=>{
-  	 	// 	this.items = data;
-  	 	// });
-  	 	this.items = [{
-  	 		ShopId: 1, 
-  	 		ShopName: "诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店",
-  	 		TotalAmount: 1000.30,
-  	 		PickTime: '2017/04/22 18:32:00'
-  	 	},{
-  	 		ShopId: 2, 
-  	 		ShopName: "诚信小铺中航技三层店",
-  	 		TotalAmount: 3000.30,
-  	 		PickTime: '2017/04/22 18:32:00'
-  	 	},{
-  	 		ShopId: 3, 
-  	 		ShopName: "诚信小铺中航技三层店",
-  	 		TotalAmount: 2000.30,
-  	 		PickTime: '2017/04/22 18:32:00'
-  	 	}];
+  	 	this.items = this.allItems.filter((x)=>{
+ 			return x.ShopName.indexOf(this.name)>-1
+ 		});
   	 },
   	 sort(key){
   	 	if(this.current.key === key){
@@ -101,7 +83,11 @@ export default {
   	 }
   },
   created(){
-  	this.GetShopList();
+  	Request.GetShopList().then((data)=>{
+  		this.allItems = data;
+ 		this.items = data;
+ 		this.GetShopList();
+ 	});
   }
 }
 </script>

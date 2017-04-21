@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="fix_header">
 		<header class="nav">
 			<div class="search">
 				<i class="icon-search" @click="search()"></i>
@@ -79,6 +79,13 @@
 </script>
 <style  lang="less" scoped>
 	@import '../styles/common';
+	.fix_header{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 2;
+	}
 	.nav{
 		.px2rem(height, 120);
 		background-color: #b5b5b5;

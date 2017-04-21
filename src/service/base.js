@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import { default as message } from 'lib/message'
 
 //启用http请求插件
 Vue.use(VueResource);
@@ -12,16 +13,17 @@ var request = (options) => {
         method: options.method,
         body: options.body,
         params: options.params,
-        timeout: TIMEOUT,
-        emulateJSON: true
-    }).then(response => {debugger;
+        timeout: TIMEOUT
+    }).then(response => {
         var result = response.body;
-        if(result.status == 1){
-        	return result.data;
+        if(result.StatusCode == 200){
+        	return result.Value;
         }else{
-        	console.error(result.massage);
+            message.error(result.ErrorMessage);
         }
-    }).catch((response)=>{console.error(response);});
+    }).catch((response)=>{
+        message.error('path route error~~');
+    });
 }
 
 //http请求方式

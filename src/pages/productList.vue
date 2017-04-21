@@ -19,8 +19,8 @@
 				</tbody>
 			</table>
 		</section>
-		<section class="empty"></section>
-		<section class="footer">
+		<section class="empty" v-if="showBtn"></section>
+		<section class="footer" @click="confirm()" v-if="showBtn">
 			<a class="btn">确认完成</a>
 		</section>
 	</div>
@@ -29,12 +29,18 @@
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
 	import { mapState, mapActions } from 'vuex'
+	import { default as message } from 'lib/message'
 	export default {
 		name: 'productList',
 		data(){
 			return {
 				showMe: true,
-				items: []
+				allItems: [],
+				items: [],
+				id: 0,
+				time: '',
+				now: '',
+				showBtn: true
 			}
 		},
 		components: {
@@ -54,33 +60,50 @@
 		},
 		methods: {
 			add(item){
-				item.count ++;
+				item.PickAmount ++;
 			},
 			sub(item){
-				item.count>0 && item.count--;
+				item.PickAmount>0 && item.PickAmount--;
 			},
 			GetProductList(){
-				// Request.GetProductList({
-				// 	name: this.name,
-				// 	id: this.user.id
-				// }).then((data)=>{
-				// 	this.items = data;
-				// });
-				this.items = [{
-					ProductId: 1, 
-					ProductName: "健力宝",
-					FullAmount: 4,
-					PickAmount: 4
-				},{
-					ProductId: 2,
-					ProductName: "红牛",
-					FullAmount: 5,
-					PickAmount: 5
-				}];
+				this.items = this.allItems.filter(function(x){
+					return x.ProductName.indexOf(this.name)>-1
+				}.bind(this));
+			},
+			confirm(){
+				let newItems = [];
+				this.items.map((item,i)=>{
+					newItems.push({
+						ProductId: item.ProductId,
+						ProductName: item.ProductName,
+						ProductCount: item.PickAmount
+					});
+				});
+				
+				Request.PickProduct({
+					shopid: this.id,
+					ProductList: newItems,
+					PickStartTime: this.now
+				}).then((data)=>{
+					this.showBtn = false;
+					message.success("捡货成功");
+				});
 			}
 		},
 		created(){
-			this.GetProductList();
+			let now = new Date();
+			this.id = this.$route.query.id;
+			this.time = this.$route.query.time;
+			this.now = [now.getFullYear(), now.getMonth()+1, now.getDate()].join('/') + ' ' + [now.getHours(), now.getMinutes(), now.getSeconds()].join(':');
+			Request.GetProductList({
+				shopid: this.id,
+				pickTime: this.now,
+				lastPickTime: this.time.replace(/T/, ' ')
+			}).then((data)=>{
+				this.allItems = data;
+				this.items = data;
+				this.GetProductList();
+			});
 		}
 	}
 </script>

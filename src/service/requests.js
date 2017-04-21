@@ -11,9 +11,18 @@ Request.GetUsers = (options) =>{
 Request.GetProductList = (options) =>{
 	return http.get(`${URL.PRODUCT_LIST}`, options);
 }
-Request.Offshelves = (options) =>{
-	return http.post(`${URL.OFF_SHELVES}`, options);
+Request.PickProduct =  (options) =>{
+	return http.post(`${URL.POST_PRODUCT}`, options);
 }
-Request.Onproduct = (options) =>{
-	return http.post(`${URL.ON_PRODUCT}`, options);
+Request.GetDistanceList = (options) =>{
+	return http.get(`${URL.DISTANCE_LIST}`, options);
+}
+Request.DeliverProducts = (options) =>{
+	return http.get(`${URL.DELIVER_PRODUCTS}`, options);
+}
+Request.OnShelvesProducts = (options) =>{
+	return http.get(`${URL.ONSHELVES_PRODUCTS}`, options);
+}
+Request.CheckStoreProducts = (options) =>{
+	return http.get(`${URL.CHECKSTORE_PRODUCTS}`, options);
 }

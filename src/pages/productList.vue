@@ -1,6 +1,6 @@
 <template>
 	<div class="content" v-if="showMe">
-		<search></search>
+		<search v-bind:showMenu="false"></search>
 		<section class="list">
 			<table class="table">
 				<thead class="f26">

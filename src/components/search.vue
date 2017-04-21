@@ -2,8 +2,10 @@
 	<div>
 		<header class="nav">
 			<div class="search">
-				<i class="icon-search"></i>
-				<input type="text" class="f26" placeholder="搜索名字" v-model="name" @change="change()" />
+				<i class="icon-search" @click="search()"></i>
+				<form id="myform" action="" onsubmit="return false;" @search="search()">
+					<input type="search" class="f26" placeholder="搜索名字" v-model="name"/>
+				</form>
 			</div>
 			<div class="menu" @click="open()" v-if="showMenu">
 				<span class="nav-btn f26">
@@ -51,12 +53,12 @@
 	  		close(){
 	  			this.showCover = false;
 	  		},
-	  		change(){
-	  			this.setName(this.name);
-	  		},
 	  		select(user){
 	  			this.setUser(user);
 	  			this.showCover = false;
+	  		},
+	  		search(){
+	  			this.setName(this.name);
 	  		}
 	  	},
 	  	created(){
@@ -110,17 +112,20 @@
 			.px2rem(line-height, 80);
 			background-color: #fff;
 			border-radius: 40px;
-			padding: 0 .4rem 0 1.2rem;
+			padding: 0 1.2rem 0 .4rem;
 			.px2rem(margin-top, 20);	
 			.icon-search{
 				display: inline-block;
 				width: .426rem;
 				height: .426rem;
 				position: absolute;
-				left: .4rem;
+				right: .4rem;
 				top: 50%;
 				margin-top: -.213rem;
 				background: url('../assets/search.png') no-repeat center center / .426rem .426rem;
+			}
+			form{
+				height: 100%;
 			}
 			input{
 				width: 100%;

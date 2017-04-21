@@ -10,14 +10,14 @@ const WEAPON_VERSION = '1.0.2';
 // http://localhost:18130/api/Ground/GetProductsBySportType?SportType=6&spid=10742
 // http://news-at.zhihu.com/api/4/news/latest
 var root = {
-    host: release ? 'http://test.mrich.com/api' : 'http://test.weixin.com/api'
+    host: release ? 'http://test.mrich.com/api' : 'http://10.9.35.60:5000'
 };
 
 //请求url
 export const URL = {};
 
 //小铺列表
-URL.SHOP_LIST = `${root.host}/Shop/GetShopList`;
+URL.SHOP_LIST = `${root.host}/PickUp/Index`;
 //用户列表
 URL.USER_LIST = `${root.host}/Shop/GetUserList`;
 //商品列表

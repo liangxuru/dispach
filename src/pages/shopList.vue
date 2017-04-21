@@ -53,7 +53,7 @@ export default {
   },
   methods: {
   	 GetShopList(){
-  	 	// Request.SHOP_LIST({
+  	 	// Request.GetShopList({
   	 	// 	name: this.name,
   	 	// 	id: this.user.id
   	 	// }).then((data)=>{

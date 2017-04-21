@@ -14,8 +14,8 @@ var request = (options) => {
         params: options.params,
         timeout: TIMEOUT,
         emulateJSON: true
-    }).then(response => {
-        var result = JSON.parse(response.body);
+    }).then(response => {debugger;
+        var result = response.body;
         if(result.status == 1){
         	return result.data;
         }else{

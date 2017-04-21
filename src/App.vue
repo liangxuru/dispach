@@ -21,11 +21,11 @@ export default {
   components: {
     ScaleLoader
   },
-  created(){
+  mounted(){
   	//解决移动端click事件300ms的延迟响应
-    $(function() {
-        FastClick.attach(document.body);
-    });
+    window.addEventListener('load', function() {
+      FastClick.attach(document.body);
+    }, false);
   }
 }
 </script>

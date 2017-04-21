@@ -825,7 +825,6 @@
 		return new FastClick(layer, options);
 	};
 
-
 	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 
 		// AMD. Register as an anonymous module.

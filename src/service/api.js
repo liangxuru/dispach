@@ -10,7 +10,7 @@ const WEAPON_VERSION = '1.0.2';
 // http://localhost:18130/api/Ground/GetProductsBySportType?SportType=6&spid=10742
 // http://news-at.zhihu.com/api/4/news/latest
 var root = {
-    host: release ? 'http://test.mrich.com/api' : 'http://10.68.12.178:18888/api'
+    host: release ? 'http://test.mrich.com/api' : 'http://10.9.33.23:18888/api'
 };
 
 //请求url
@@ -36,3 +36,5 @@ URL.DELIVER_PRODUCTS = `${root.host}/Deliver/DeliverProducts`;
 URL.ONSHELVES_PRODUCTS = `${root.host}/Deliver/OnShelvesProducts`;
 //盘点列表
 URL.CHECKSTORE_PRODUCTS = `${root.host}/Deliver/CheckStoreProducts`;
+//[下架，盘点，上货]操作 (0：上货 1：盘点 2：下架某类商品一定数量（还在售）3：全部下架某类商品(禁止售卖))
+URL.OPERATE_PRODUCT = `${root.host}/Deliver/OperationProducts`;

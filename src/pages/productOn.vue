@@ -20,7 +20,7 @@
 			</table>
 		</section>
 		<section class="empty"></section>
-		<section class="footer">
+		<section class="footer" @click="confirm()">
 			<a class="btn">上货完成</a>
 		</section>
 	</div>
@@ -29,6 +29,7 @@
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
 	import { mapState, mapActions } from 'vuex'
+	import { default as message } from 'lib/message'
 	export default {
 		name: 'productOn',
 		data(){
@@ -51,6 +52,7 @@
 		  	}
 		},
 		methods: {
+			...mapActions(['setLoading']),
 			add(item){
 				item.RecommendOnShelvesAmount ++;
 			},
@@ -61,17 +63,45 @@
 				this.items = this.allItems.filter(function(x){
 					return x.ProductName.indexOf(this.name)>-1
 				}.bind(this));
+			},
+			confirm(){
+				this.setLoading(true);
+				//确定下架操作
+				let newItems = [];
+				this.items.map((item, i)=>{
+					newItems.push({
+						ProductId: item.ProductId,
+						ProductName: item.ProductName,
+						ProductCount: item.RecommendOnShelvesAmount,
+						RemainCount: item.RemainderAmount
+					});
+				});
+				
+				Request.OperationProducts({
+					ShopId: this.id,
+					ProductList: newItems,
+					OperationType: 0
+				}).then((data)=>{
+					message.success("上货成功！");
+					this.loadData();
+					this.setLoading(false);
+				});
+			},
+			loadData(){
+				this.setLoading(true);
+				Request.OnShelvesProducts({
+					shopid: this.id
+				}).then((data)=>{
+					this.items = data;
+					this.allItems = data;
+					this.GetProductList();
+					this.setLoading(false);
+				});
 			}
 		},
 		created(){
 			this.id = this.$route.query.id;
-			Request.OnShelvesProducts({
-				shopid: this.id
-			}).then((data)=>{
-				this.items = data;
-				this.allItems = data;
-				this.GetProductList();
-			});
+			this.loadData();
 		}
 	}
 </script>

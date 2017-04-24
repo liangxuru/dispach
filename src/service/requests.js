@@ -26,3 +26,6 @@ Request.OnShelvesProducts = (options) =>{
 Request.CheckStoreProducts = (options) =>{
 	return http.get(`${URL.CHECKSTORE_PRODUCTS}`, options);
 }
+Request.OperationProducts = (options) =>{
+	return http.post(`${URL.POST_PRODUCT}`, options);
+}

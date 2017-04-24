@@ -28,7 +28,7 @@
 		</section>
 		<section class="shelves" v-if="shelves">
 			<div class="f30">{{ info.ProductName }}</div>
-			<div class="count f26"><span>下架数量</span><span><input type="text" :value="info.RemainderAmount" /></span></div>
+			<div class="count f26"><span>下架数量</span><span><input type="text" v-model="count" /></span></div>
 			<div class="select f26" @click="select()"><i :class="{'selected': OperationType === 3}"></i><span>将该商品状态变为下架</span></div>
 			<div><a class="btn" @click="confirm()">确定</a></div>
 		</section>
@@ -49,7 +49,8 @@
 				info: {},
 				OperationType: 2,
 				id: 0,
-				items: []
+				items: [],
+				count: 0
 			}
 		},
 		components: {
@@ -64,6 +65,7 @@
 		  }
 		},
 		methods: {
+			...mapActions(['setLoading']),
 			GetProductList(){
 				this.items = this.items.filter(function(x){
 					return x.ProductName.indexOf(this.name)>-1
@@ -73,33 +75,50 @@
 				//下架
 				this.shelves = true;
 				this.info = item;
+				this.count = item.RemainderAmount;
 			},
 			Closeshelves(){
 				this.shelves = false;
 			},
 			confirm(){
-				//确定
-				Request.Offshelves({
-					product: this.info,
+				this.setLoading(true);
+				//确定下架操作
+				let newItems = [];
+				newItems.push({
+					ProductId: this.info.ProductId,
+					ProductName: this.info.ProductName,
+					ProductCount: this.count,
+					RemainCount: this.info.RemainderAmount
+				});
+				Request.OperationProducts({
+					ShopId: this.id,
+					ProductList: newItems,
 					OperationType: this.OperationType
 				}).then((data)=>{
-					message.success(data);
+					message.success("下架成功！");
 					this.shelves = false;
+					this.loadData();
+					this.setLoading(false);
 				});
 			},
 			select(){
 				this.OperationType = 5 - this.OperationType;
+			},
+			loadData(){
+				this.setLoading(true);
+				Request.DeliverProducts({
+					shopid: this.id,
+					pickTime: new Date()
+				}).then((data)=>{
+					this.items = data;
+					this.GetProductList();
+					this.setLoading(false);
+				});
 			}
 		},
 		created(){
 			this.id = this.$route.query.id;
-			Request.DeliverProducts({
-				shopid: this.id,
-				pickTime: new Date()
-			}).then((data)=>{
-				this.items = data;
-				this.GetProductList();
-			});
+			this.loadData();
 		}
 	}
 </script>

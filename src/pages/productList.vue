@@ -59,6 +59,7 @@
 		  	}
 		},
 		methods: {
+			...mapActions(['setLoading']),
 			add(item){
 				item.PickAmount ++;
 			},
@@ -71,6 +72,7 @@
 				}.bind(this));
 			},
 			confirm(){
+				this.setLoading(true);
 				let newItems = [];
 				this.items.map((item,i)=>{
 					newItems.push({
@@ -86,6 +88,7 @@
 					PickStartTime: this.now
 				}).then((data)=>{
 					this.showBtn = false;
+					this.setLoading(false);
 					message.success("捡货成功");
 				});
 			}
@@ -95,6 +98,7 @@
 			this.id = this.$route.query.id;
 			this.time = this.$route.query.time;
 			this.now = [now.getFullYear(), now.getMonth()+1, now.getDate()].join('/') + ' ' + [now.getHours(), now.getMinutes(), now.getSeconds()].join(':');
+			this.setLoading(true);
 			Request.GetProductList({
 				shopid: this.id,
 				pickTime: this.now,
@@ -103,6 +107,7 @@
 				this.allItems = data;
 				this.items = data;
 				this.GetProductList();
+				this.setLoading(false);
 			});
 		}
 	}

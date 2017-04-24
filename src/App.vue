@@ -4,7 +4,7 @@
       <transition name="router-fade" mode="out-in">
         <router-view></router-view>
       </transition>
-      <scale-loader></scale-loader>
+      <scale-loader v-bind:loading="isLoading"></scale-loader>
     </div>
   </div>
 </template>

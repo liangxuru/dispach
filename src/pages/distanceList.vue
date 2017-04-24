@@ -46,22 +46,12 @@
 			search
 		},
 		methods: {
+			...mapActions(['setLoading']),
 			GetDistanceList(){
-				// this.items = [{
-				// 	ShopId: 1,
-				// 	ShopName: '诚信小铺中航技三层店',
-				// 	Surplus: '57%',
-				// 	Distance: 578,
-				// 	DeliveryStatus: 0
-				// },{
-				// 	ShopId: 2,
-				// 	ShopName: '诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店诚信小铺中航技三层店',
-				// 	Surplus: '47%',
-				// 	Distance: 578,
-				// 	DeliveryStatus: 1
-				// }];
+				this.setLoading(true);
 				Request.GetDistanceList().then((data)=>{
 					this.items = data;
+					this.setLoading(false);
 				});
 			},
 			select(item){

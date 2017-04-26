@@ -2,6 +2,9 @@ import { URL } from './api'
 import { http } from './base.js'
 
 export const Request = {};
+Request.Login = (options) => {
+	return http.post(`${URL.USER_LOGIN}`, options);
+}
 Request.GetShopList = (options) => {
 	return http.get(`${URL.SHOP_LIST}`, options);
 }

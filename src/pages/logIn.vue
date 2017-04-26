@@ -1,0 +1,151 @@
+<template>
+	<div class="content" v-if="showMe">
+		<div class="login_head">
+			账号登录
+		</div>
+		<div class="line_1"></div>
+		<div class="login_input">
+		<div class="div">
+			<label for="user">账号</label><input type="text" name="UserName" placeholder="输入登录账号" v-model="UserName">
+		</div>
+		<div class="line_2"></div>
+		<div class="div">
+			<label for="psd">密码</label><input type="password" name="Password" placeholder="输入登录密码" v-model="Password">
+		</div>			
+		</div>
+		<div class="line_1"></div>
+		<div class="login_select">
+			选择角色
+		</div>
+		<div class="line_1"></div>
+		<div class="login_item">
+			<div class="divdiv">
+				<input type="radio" name="Role" value="1" v-model="Role">管理员
+			</div>
+			<div class="line_2"></div>
+			<div class="divdiv">
+				<input type="radio" name="Role" value="2" v-model="Role">拣货员
+			</div>
+			<div class="line_2"></div>
+			<div class="divdiv">
+				<input type="radio" name="Role" value="3" v-model="Role">配送员
+			</div>			
+		</div>
+		<div class="line_1"></div>
+		<button class="login_button"  @click="logIn">
+			登 录
+		</button>
+	</div>
+</template>
+<script>
+	import { Request } from 'service/requests'
+	import { mapState, mapActions } from 'vuex'
+	export default {
+		name: 'logIn',
+		data(){
+			return {
+				showMe: true,
+				UserName:'',
+				Password:'',
+				Role:''
+			}
+		},
+		methods: {
+			logIn:function(){
+				//console.log(this.UserName+"///"+this.Password+"///"+this.Role)
+	      		//发送post请求
+	      		this.setLoading(true);
+	      		Request.Login({
+	      			UserName: this.UserName,
+	      			Password: this.Password,
+	      			Role: this.Role
+	      		}).then(function(res){
+	       			//console.log(res.body.Value.RoleId); 
+	       			if(res.RoleId == 1){
+	       				this.$router.replace({path: '/distanceList'});
+	       				window.location.href="https://www.baidu.com/"
+	       			}else if(res.RoleId == 2){
+	       				this.$router.replace({path: '/shoplist'});
+	       			}else if(res.RoleId == 3){
+	       				this.$router.replace({path: '/distanceList'});
+	       			}else{
+	       				this.$router.replace({path: '/'});
+	       			}
+	       			this.setLoading(false);
+	       		});
+			}
+		}
+	}
+</script>
+<style  lang="less" scoped>
+	@import '../styles/common';
+	.login_head{
+		width: 100%;
+		height:90px;
+		line-height: 90px;
+		text-align: center;
+		font-size: 20px;
+	}
+	.line_1{
+		width: 100%;
+		height: 1px;
+		background: #DBDBDB;
+		
+	}
+	.login_input{
+		width: 100%;
+		height: 118px;
+		background: white;
+		font-size: 16px;
+	}
+	.login_input input{
+		border:none;
+		outline: none;
+		margin-left: 12%;
+	}
+	.div{
+		width:90%;
+		margin-left: 5%;
+		height: 39px;
+		padding-top: 20px;
+	}
+	.login_select{
+		width: 100%;
+		height: 20px;
+		font-size: 16px;
+		color:  #9C9C9C;
+		padding: 40px 0 0 5%;
+	}
+	.line_2{
+		width: 90%;
+		height: 1px;
+		background: #DBDBDB;
+		margin-left: 5%;
+	}
+	.login_item{
+		width: 100%;
+		height: 150px;
+		background: white;
+		font-size: 16px;
+	}
+	.login_item input{
+		margin-right:20px;
+	}
+	.divdiv{
+		width: 90%;
+		height: 28px;
+		margin-left: 5%;
+		padding-top: 21px;
+	}
+	.login_button{
+		width:90%;
+		height: 49px;
+		margin:35px 5% 0 5%;
+		font-size: 16px;
+		color: white;
+		background:#51AA37;
+		border:none;
+		outline: none;
+		border-radius: 5px;
+	}
+</style>

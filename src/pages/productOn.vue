@@ -85,6 +85,7 @@
 					message.success("上货成功！");
 					this.loadData();
 					this.setLoading(false);
+					this.$router.replace({path: '/distanceList'});
 				});
 			},
 			loadData(){
@@ -108,7 +109,7 @@
 <style  lang="less" scoped>
 	@import '../styles/common';
 	.list{
-		.px2rem(margin-top, 20);
+		.px2rem(margin-top, 140);
 		background-color: #fff;
 		.table{
 			width: 100%;

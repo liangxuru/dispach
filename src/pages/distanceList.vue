@@ -39,7 +39,8 @@
 				suportBroser: true,
 				x: 0,
 				y: 0,
-				current: { key: '', value: 0}
+				current: { key: '', value: 0},
+				allItems: []
 			}
 		},
 		components: {
@@ -48,11 +49,11 @@
 		methods: {
 			...mapActions(['setLoading']),
 			GetDistanceList(){
-				this.setLoading(true);
-				Request.GetDistanceList().then((data)=>{
-					this.items = data;
-					this.setLoading(false);
-				});
+				this.items = this.allItems.filter((x)=>{
+		 			return x.ShopName.indexOf(this.name)>-1
+		 		}).filter((x)=>{
+		 			return x.PickManId == this.user.UserId
+		 		});
 			},
 			select(item){
 				this.$router.replace({path: '/shopInfo', query: { id: item.ShopId }});
@@ -61,7 +62,7 @@
 				if (navigator.geolocation)
 			    {
 			    	navigator.geolocation.getCurrentPosition((position)=>{
-			    		this.x = position.coords.latitude;alert(this.x);
+			    		this.x = position.coords.latitude;
 			    		this.y = position.coords.longitude;
 			    		callback();
 			    	});
@@ -98,14 +99,22 @@
 		  	}
 		},
 		created(){
-			this.getLocation(this.GetDistanceList());
+			this.getLocation(function(){
+				this.setLoading(true);
+				Request.GetDistanceList().then((data)=>{
+					this.items = data;
+					this.allItems = data;
+					this.setLoading(false);
+					this.GetDistanceList();
+				});
+			});
 		}
 	}
 </script>
 <style  lang="less" scoped>
 	@import '../styles/common';
 	.list{
-		.px2rem(margin-top, 20);
+		.px2rem(margin-top, 140);
 		background-color: #fff;
 		.table{
 			width: 100%;

@@ -57,6 +57,8 @@ export default {
   	 GetShopList(){
   	 	this.items = this.allItems.filter((x)=>{
  			return x.ShopName.indexOf(this.name)>-1
+ 		}).filter((x)=>{
+ 			return x.PickManId == this.user.UserId
  		});
   	 },
   	 sort(key){
@@ -97,7 +99,7 @@ export default {
 <style  lang="less" scoped>
 	@import '../styles/common';
 	.list{
-		.px2rem(margin-top, 20);
+		.px2rem(margin-top, 140);
 		background-color: #fff;
 		.table{
 			width: 100%;

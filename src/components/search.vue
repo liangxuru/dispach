@@ -19,7 +19,7 @@
 					全部
 				</div>
 				<ul class="items">
-					<li @click="select(item)" v-for="item in items">{{ item.name }}</li>
+					<li @click="select(item)" v-for="item in items">{{ item.UserName }}</li>
 				</ul>
 			</div>
 			<div class="floatright" @click="close()"><div></div></div>
@@ -58,22 +58,13 @@
 	  			this.showCover = false;
 	  		},
 	  		search(){
-	  			this.setName(this.name);
+	  			this.setName(this.UserName);
 	  		}
 	  	},
 	  	created(){
-	  		// Request.GetUsers({
-	  		// 	id: 0
-	  		// }).then((data)=>{
-	  		// 	this.items = data;
-	  		// });
-	  		this.items = [{
-	  			id: 1,
-	  			name: "张三"
-	  		},{
-	  			id: 2,
-	  			name: "李四"
-	  		}];
+	  		Request.GetUsers().then((data)=>{
+	  			this.items = data;
+	  		});
 	  	}
 	}
 </script>

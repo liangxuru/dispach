@@ -45,15 +45,52 @@
 		data(){
 			return {
 				showMe: true,
-				UserName:'',
-				Password:'',
-				Role:''
+				UserName:'jhy001',
+				Password:'123456',
+				Role:2
 			}
 		},
 		methods: {
 			...mapActions(['setLoading']),
 			logIn:function(){
-	      		this.setLoading(true);
+	      		//this.setLoading(true);
+	      		// var self = this;
+	      		// $.ajax({
+	      		// 	url: 'http://123.57.21.63:18888/api/user/loginon',
+	      		// 	type: 'POST',
+	      		// 	async: false,
+	      		// 	contentType: "application/json",
+	      		// 	data: {
+	      		// 		UserName: self.UserName,
+	      		// 		Password: self.Password,
+	      		// 		Role: self.Role
+	      		// 	},
+	      		// 	success: function(data){debugger;
+	      		// 		let result = data;
+	      		// 	},
+	      		// 	error: function(){
+	      		// 		debugger;
+	      		// 	}
+	      		// });
+	      		// Promise.all([this.$http({
+         //            method:'POST',
+         //            url:'http://123.57.21.63:18888/api/user/loginon',
+         //            body:{'UserName':this.UserName,'Password':this.Password,'Role':this.Role}
+         //            })
+         //        ]).then(function(result){
+         //        	let res = result[0].body.Value;
+        	// 		if(res.RoleId == 1){
+	       	// 			this.$router.replace({path: '/distanceList'});
+	       	// 			window.location.href="https://www.baidu.com/"
+	       	// 		}else if(res.RoleId == 2){
+	       	// 			this.$router.replace({path: '/shoplist'});
+	       	// 		}else if(res.RoleId == 3){
+	       	// 			this.$router.replace({path: '/distanceList'});
+	       	// 		}else{
+	       	// 			this.$router.replace({path: '/'});
+	       	// 		}
+	       	// 		this.setLoading(false);
+         //        }.bind(this));
 	      		Request.Login({
 	      			UserName: this.UserName,
 	      			Password: this.Password,

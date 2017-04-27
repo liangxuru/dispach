@@ -19,6 +19,9 @@
 						<td><a class="btn-sm f26" v-bind:href="`#/productList?id=${item.ShopId}&time=${item.PickTime}`">捡货</a></td>
 					</tr>
 				</tbody>
+				<tfoot v-if="items.length == 0">
+					<tr><td colspan="4">看完辣，别拉了(; >_<)</td></tr>
+				</tfoot>
 			</table>
 		</section>
 	</div>
@@ -56,7 +59,7 @@ export default {
   	 ...mapActions(['setLoading']),
   	 GetShopList(){
   	 	this.items = this.allItems.filter((x)=>{
- 			return x.ShopName.indexOf(this.name)>-1
+ 			return x.ShopName && x.ShopName.indexOf(this.name)>-1
  		});
  		if(this.user.UserId){
 	 		this.items = this.items.filter((x)=>{

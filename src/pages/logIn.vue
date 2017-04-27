@@ -53,7 +53,7 @@
 		methods: {
 			...mapActions(['setLoading']),
 			logIn:function(){
-	      		//this.setLoading(true);
+	      		this.setLoading(true);
 	      		// var self = this;
 	      		// $.ajax({
 	      		// 	url: 'http://123.57.21.63:18888/api/user/loginon',

@@ -9,4 +9,5 @@ var router = new Router({
 	routes,
 	saveScrollPosition: true
 });
+
 export default router = router;

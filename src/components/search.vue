@@ -15,11 +15,11 @@
 		</header>
 		<section v-if="showCover">
 			<div class="mask f26">
-				<div class="all">
+				<div class="all" :class="current==0?'select':''" @click="select({'UserId':0})">
 					全部
 				</div>
 				<ul class="items">
-					<li @click="select(item)" v-for="item in items">{{ item.UserName }}</li>
+					<li :class="current==$index?'select':''" @click="select(item, $index)" v-for="item in items">{{ item.UserName }}</li>
 				</ul>
 			</div>
 			<div class="floatright" @click="close()"><div></div></div>
@@ -36,6 +36,10 @@
 			showMenu: {
 				type: Boolean,
 				default: true
+			},
+			current: {
+				type: Number,
+				default: 0
 			}
 		},
 		data () {
@@ -53,7 +57,8 @@
 	  		close(){
 	  			this.showCover = false;
 	  		},
-	  		select(user){
+	  		select(user, index){
+	  			this.current = index;
 	  			this.setUser(user);
 	  			this.showCover = false;
 	  		},
@@ -147,8 +152,10 @@
 			.px2rem(margin-top, 20);
 			.px2rem(margin-bottom, 20);
 			padding: .4rem;
-			color: @baseFontColor;
 			background-color: #fff;
+		}
+		.select{
+			color: @baseFontColor;
 		}
 		.items{
 			background-color: #fff;

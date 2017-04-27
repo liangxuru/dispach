@@ -5,7 +5,7 @@ import * as types from '../mutation-types'
 // shape: [{ id, quantity }]
 const state = {
   name: '',
-  user: {}
+  user: { UserId: 0 }
 }
 
 // getters

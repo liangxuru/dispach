@@ -8,6 +8,10 @@ import productCheck from '@/pages/productCheck'
 
 export default [
 	{
+		path: '/',
+		component: Login
+	},
+	{
 		path: '/login',
 		name: 'logIn',
 		component: Login

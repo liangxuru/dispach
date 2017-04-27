@@ -20,15 +20,15 @@
 		<div class="line_1"></div>
 		<div class="login_item">
 			<div class="divdiv">
-				<input type="radio" name="Role" value="1" v-model="Role">管理员
+				<input type="radio" name="Role" value="1" v-model="Role" id="role1"><label for="role1">管理员</label>
 			</div>
 			<div class="line_2"></div>
 			<div class="divdiv">
-				<input type="radio" name="Role" value="2" v-model="Role">拣货员
+				<input type="radio" name="Role" value="2" v-model="Role" id="role2"><label for="role2">拣货员</label>
 			</div>
 			<div class="line_2"></div>
 			<div class="divdiv">
-				<input type="radio" name="Role" value="3" v-model="Role">配送员
+				<input type="radio" name="Role" value="3" v-model="Role" id="role3"><label for="role3">配送员</label>
 			</div>			
 		</div>
 		<div class="line_1"></div>
@@ -53,15 +53,12 @@
 		methods: {
 			...mapActions(['setLoading']),
 			logIn:function(){
-				//console.log(this.UserName+"///"+this.Password+"///"+this.Role)
-	      		//发送post请求
 	      		this.setLoading(true);
 	      		Request.Login({
 	      			UserName: this.UserName,
 	      			Password: this.Password,
 	      			Role: this.Role
 	      		}).then(function(res){
-	       			//console.log(res.body.Value.RoleId); 
 	       			if(res.RoleId == 1){
 	       				this.$router.replace({path: '/distanceList'});
 	       				window.location.href="https://www.baidu.com/"
@@ -73,7 +70,7 @@
 	       				this.$router.replace({path: '/'});
 	       			}
 	       			this.setLoading(false);
-	       		});
+	       		}.bind(this));
 			}
 		}
 	}

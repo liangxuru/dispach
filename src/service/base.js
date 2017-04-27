@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import { default as message } from 'lib/message'
+import router from '../router/index'
 
 //启用http请求插件
 Vue.use(VueResource);
@@ -18,8 +19,10 @@ var request = (options) => {
         var result = response.body;
         if(result.StatusCode == 200){
         	return result.Value;
-        }else{
+        }else if(result.StatusCode == 400){
             message.error(result.ErrorMessage);
+        }else if(result.StatusCode == 302){
+            router.replace('/login');
         }
     }).catch((response)=>{
         message.error('path route error~~');

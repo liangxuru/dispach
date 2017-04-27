@@ -57,9 +57,12 @@ export default {
   	 GetShopList(){
   	 	this.items = this.allItems.filter((x)=>{
  			return x.ShopName.indexOf(this.name)>-1
- 		}).filter((x)=>{
- 			return x.PickManId == this.user.UserId
  		});
+ 		if(this.user.UserId){
+	 		this.items = this.items.filter((x)=>{
+	 			return x.PickManId == this.user.UserId
+	 		});
+ 		}
   	 },
   	 sort(key){
   	 	if(this.current.key === key){
@@ -87,12 +90,12 @@ export default {
   },
   created(){
   	this.setLoading(true);
-  	Request.GetShopList().then((data)=>{
+  	Request.GetShopList().then(function(data){
   		this.allItems = data;
  		this.items = data;
  		this.GetShopList();
  		this.setLoading(false);
- 	});
+  	}.bind(this));
   }
 }
 </script>

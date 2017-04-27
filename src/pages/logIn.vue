@@ -51,6 +51,7 @@
 			}
 		},
 		methods: {
+			...mapActions(['setLoading']),
 			logIn:function(){
 				//console.log(this.UserName+"///"+this.Password+"///"+this.Role)
 	      		//发送post请求
@@ -143,7 +144,7 @@
 		margin:35px 5% 0 5%;
 		font-size: 16px;
 		color: white;
-		background:#51AA37;
+		background: @baseFontColor;
 		border:none;
 		outline: none;
 		border-radius: 5px;

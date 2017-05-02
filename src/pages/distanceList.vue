@@ -54,9 +54,12 @@
 			GetDistanceList(){
 				this.items = this.allItems.filter((x)=>{
 		 			return x.ShopName.indexOf(this.name)>-1
-		 		}).filter((x)=>{
-		 			return x.PickManId == this.user.UserId
 		 		});
+		 		if(this.user.UserId){
+			 		this.items = this.items.filter((x)=>{
+			 			return x.PickManId == this.user.UserId
+			 		});
+		 		}
 			},
 			select(item){
 				this.$router.replace({path: '/shopInfo', query: { id: item.ShopId }});

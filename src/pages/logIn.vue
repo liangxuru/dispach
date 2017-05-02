@@ -62,7 +62,6 @@
 	      		}).then(function(res){
 	       			if(res.RoleId == 1){
 	       				this.$router.replace({path: '/distanceList'});
-	       				window.location.href="https://www.baidu.com/"
 	       			}else if(res.RoleId == 2){
 	       				this.$router.replace({path: '/shoplist'});
 	       			}else if(res.RoleId == 3){

@@ -61,17 +61,24 @@
 			select(item){
 				this.$router.replace({path: '/shopInfo', query: { id: item.ShopId }});
 			},
-			getLocation(callback){
-				if (navigator.geolocation)
-			    {
-			    	navigator.geolocation.getCurrentPosition((position)=>{
-			    		this.x = position.coords.latitude;
-			    		this.y = position.coords.longitude;
-			    		callback();
-			    	});
-			    }else{
-			    	this.suportBroser = false;
-			    }
+			getLocation(){
+				// function showPosition(position){
+				// 	this.x = position.coords.latitude;
+				// 	this.y = position.coords.longitude;
+					// this.setLoading(true);
+					// Request.GetDistanceList().then((data)=>{
+					// 	this.items = data;
+					// 	this.allItems = data;
+					// 	this.setLoading(false);
+					// 	this.GetDistanceList();
+					// });
+				// }
+				// if (navigator.geolocation)
+			 //    {
+			 //    	navigator.geolocation.getCurrentPosition(showPosition);
+			 //    }else{
+			    	// this.suportBroser = false;
+			    // }
 			},
 		  	 sort(key){
 		  	 	if(this.current.key === key){
@@ -102,14 +109,13 @@
 		  	}
 		},
 		created(){
-			this.getLocation(function(){
-				this.setLoading(true);
-				Request.GetDistanceList().then((data)=>{
-					this.items = data;
-					this.allItems = data;
-					this.setLoading(false);
-					this.GetDistanceList();
-				});
+			// this.getLocation();
+			this.setLoading(true);
+			Request.GetDistanceList().then((data)=>{
+				this.items = data;
+				this.allItems = data;
+				this.setLoading(false);
+				this.GetDistanceList();
 			});
 		}
 	}

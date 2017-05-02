@@ -17,7 +17,7 @@ var request = (options) => {
         body: options.body,
         params: options.params,
         timeout: TIMEOUT
-    })]).then(response => {
+    })]).then(response => {debugger;
         var result = response[0].body;
         if(result.StatusCode == 200){
         	return result.Value;

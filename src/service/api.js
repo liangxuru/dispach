@@ -25,7 +25,7 @@ URL.USER_LIST = `${root.host}/Deliver/GetDeliverList`;
 //商品列表
 URL.PRODUCT_LIST = `${root.host}/PickUp/PickProducts`;
 //捡货
-URL.POST_PRODUCT = `${root.host}/PickUp/PickProducts`;
+URL.POST_PRODUCT = `${root.host}/Deliver/OperationProducts`;
 //商品下架
 URL.OFF_SHELVES = `${root.host}/Shop/ProductOffShelves`;
 //上货

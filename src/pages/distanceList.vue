@@ -57,7 +57,7 @@
 		 		});
 		 		if(this.user.UserId){
 			 		this.items = this.items.filter((x)=>{
-			 			return x.PickManId == this.user.UserId
+			 			return x.DeliveryManId  == this.user.UserId
 			 		});
 		 		}
 			},

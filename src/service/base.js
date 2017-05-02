@@ -6,7 +6,11 @@ import router from '../router/index'
 
 //启用http请求插件
 Vue.use(VueResource);
-Vue.http.options.xhr = {withCredentials: true};
+Vue.http.interceptors.push((request, next) => {
+    request.credentials=true;
+    next();
+});
+// Vue.http.options.xhr = {withCredentials: true};
 //请求拦截
 const TIMEOUT = 5000;
 var request = (options) => {
@@ -17,7 +21,7 @@ var request = (options) => {
         body: options.body,
         params: options.params,
         timeout: TIMEOUT
-    })]).then(response => {debugger;
+    })]).then(response => {
         var result = response[0].body;
         if(result.StatusCode == 200){
         	return result.Value;

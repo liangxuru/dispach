@@ -93,7 +93,7 @@ export default {
   },
   created(){
   	this.setLoading(true);
-  	Request.GetShopList().then(function(data){debugger;
+  	Request.GetShopList().then(function(data){
   		this.allItems = data;
  		this.items = data;
  		this.GetShopList();

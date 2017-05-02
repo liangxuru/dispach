@@ -5,6 +5,9 @@ export const Request = {};
 Request.Login = (options) => {
 	return http.post(`${URL.USER_LOGIN}`, options);
 }
+Request.LoginOut = (options) =>{
+	return http.get(`${URL.USER_LOGINOUT}`, options);
+}
 Request.GetShopList = (options) => {
 	return http.get(`${URL.SHOP_LIST}`, options);
 }

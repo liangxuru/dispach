@@ -16,6 +16,8 @@ var root = {
 //请求url
 export const URL = {};
 URL.USER_LOGIN = `${root.host}/user/loginon`;
+//登出
+URL.USER_LOGINOUT = `${root.host}/user/LoginOut`;
 //小铺列表
 URL.SHOP_LIST = `${root.host}/PickUp/Index`;
 //用户列表

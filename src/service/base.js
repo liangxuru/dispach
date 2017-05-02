@@ -6,11 +6,11 @@ import router from '../router/index'
 
 //启用http请求插件
 Vue.use(VueResource);
+Vue.http.options.xhr = { withCredentials: true };
 Vue.http.interceptors.push((request, next) => {
     request.credentials=true;
     next();
 });
-// Vue.http.options.xhr = {withCredentials: true};
 //请求拦截
 const TIMEOUT = 5000;
 var request = (options) => {
@@ -28,6 +28,7 @@ var request = (options) => {
         }else if(result.StatusCode == 400){
             message.error(result.ErrorMessage);
         }else if(result.StatusCode == 302){
+            message.error(result.ErrorMessage);
             router.replace('/login');
         }
     }).catch((response)=>{

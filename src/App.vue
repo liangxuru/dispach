@@ -12,6 +12,7 @@
 <script>
 import "./styles/common.less"
 import { mapState, mapActions } from 'vuex'
+import { Request } from 'service/requests' 
 import ScaleLoader from 'components/ScaleLoader'
 export default {
   name: 'app',
@@ -26,6 +27,12 @@ export default {
     window.addEventListener('load', function() {
       FastClick.attach(document.body);
     }, false);
+
+    $(window).unload(function(){
+        //响应事件
+        Request.LoginOut();
+        alert("获取到了页面要关闭的事件了！"); 
+    }); 
   }
 }
 </script>

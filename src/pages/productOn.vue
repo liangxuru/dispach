@@ -17,6 +17,9 @@
 						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.RecommendOnShelvesAmount" :value="item.FullAmount" /><a class="add" @click="add(item)"></a></td>
 					</tr>
 				</tbody>
+				<tfoot v-if="items.length == 0" class="f24">
+					<tr><td colspan="3">看完辣，别拉了(; >_<)</td></tr>
+				</tfoot>
 			</table>
 		</section>
 		<section class="empty"></section>

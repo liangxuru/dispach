@@ -22,6 +22,9 @@
 						<td><div></div></td>
 					</tr>
 				</tbody>
+				<tfoot v-if="items.length == 0" class="f24">
+					<tr><td colspan="5">看完辣，别拉了(; >_<)</td></tr>
+				</tfoot>
 			</table>
 		</section>
 	</div>

@@ -19,7 +19,7 @@
 						<td><a class="btn-sm f26" v-bind:href="`#/productList?id=${item.ShopId}&time=${item.PickTime}`">捡货</a></td>
 					</tr>
 				</tbody>
-				<tfoot v-if="items.length == 0">
+				<tfoot v-if="items.length == 0" class="f24">
 					<tr><td colspan="4">看完辣，别拉了(; >_<)</td></tr>
 				</tfoot>
 			</table>

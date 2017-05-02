@@ -17,7 +17,7 @@
 					<tr v-for="item in items" @click="select(item)">
 						<td><div :class="{'point': item.DeliveryStatus===1}"></div></td>
 						<td><div class="box">{{ item.ShopName }}</div></td>
-						<td>{{ item.Surplus }}</td>
+						<td>{{ item.Surplus }}%</td>
 						<td>{{ item.Distance }}m</td>
 						<td><div></div></td>
 					</tr>

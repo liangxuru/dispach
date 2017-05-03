@@ -163,7 +163,6 @@
 				position: relative;
 			    top: -9px;
 			    text-align: center;
-			    box-sizing: border-box;
 			}
 		}
 	}

@@ -29,7 +29,7 @@
 <script>
 import search from 'components/search'
 import { Request } from 'service/requests' 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   name: 'shopList',
   data () {
@@ -57,6 +57,7 @@ export default {
   },
   methods: {
   	 ...mapActions(['setLoading']),
+  	 ...mapGetters(['getCurrentUser']),
   	 GetShopList(){
   	 	this.items = this.allItems.filter((x)=>{
  			return x.ShopName && x.ShopName.indexOf(this.name)>-1
@@ -74,13 +75,24 @@ export default {
   	 		this.current.key = key;
   	 		this.current.value = 1;
   	 	}
-  	 	this.items.sort((pre, next)=>{
-  	 		if(this.current.value){//true为升序1
-  	 			return pre[key] > next[key];
-  	 		}else{
-				return pre[key] < next[key];
+  	 	for(let i = 0; i< this.items.length-1; i++){
+  	 		for(let j=i + 1; j< this.items.length; j++){
+  	 			if(this.current.value)//true为升序1
+ 				{
+ 					if(this.items[i][key] > this.items[j][key]){
+	  	 				let temp = this.items[i][key];
+	  	 				this.items[i][key] = this.items[j][key];
+	  	 				this.items[j][key] = temp;
+	  	 			}
+ 				}else{
+ 					if(this.items[i][key] < this.items[j][key]){
+	  	 				let temp = this.items[i][key];
+	  	 				this.items[i][key] = this.items[j][key];
+	  	 				this.items[j][key] = temp;
+	  	 			}
+ 				}
   	 		}
-  	 	});
+  	 	}
   	 },
   	 date(value){
   	 	let date = new Date(value);
@@ -93,7 +105,7 @@ export default {
   },
   created(){
   	this.setLoading(true);
-  	Request.GetShopList().then(function(data){
+  	Request.GetShopList({}, this.getCurrentUser()).then(function(data){
   		this.allItems = data;
  		this.items = data;
  		this.GetShopList();

@@ -32,7 +32,7 @@ var request = (options) => {
             router.replace('/login');
         }
     }).catch((response)=>{
-        message.error('path route error~~');
+        message.error('data load error~~');
     });
 }
 

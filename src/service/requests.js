@@ -5,33 +5,33 @@ export const Request = {};
 Request.Login = (options) => {
 	return http.post(`${URL.USER_LOGIN}`, options);
 }
-Request.LoginOut = (options) =>{
-	return http.get(`${URL.USER_LOGINOUT}`, options);
+Request.LoginOut = (options, headers) =>{
+	return http.get(`${URL.USER_LOGINOUT}`, options, {'token': JSON.stringify(headers)});
 }
-Request.GetShopList = (options) => {
-	return http.get(`${URL.SHOP_LIST}`, options);
+Request.GetShopList = (options, headers) => {
+	return http.get(`${URL.SHOP_LIST}`, options, {'token': JSON.stringify(headers)});
 }
-Request.GetUsers = (options) =>{
-	return http.get(`${URL.USER_LIST}`, options);
+Request.GetUsers = (options, headers) =>{
+	return http.get(`${URL.USER_LIST}`, options, {'token': JSON.stringify(headers)});
 }
-Request.GetProductList = (options) =>{
-	return http.get(`${URL.PRODUCT_LIST}`, options);
+Request.GetProductList = (options, headers) =>{
+	return http.get(`${URL.PRODUCT_LIST}`, options, {'token': JSON.stringify(headers)});
 }
-Request.PickProduct =  (options) =>{
-	return http.post(`${URL.POST_PRODUCT}`, options);
+Request.PickProduct =  (options, headers) =>{
+	return http.post(`${URL.POST_PRODUCT}`, options, {'token': JSON.stringify(headers)});
 }
-Request.GetDistanceList = (options) =>{
-	return http.get(`${URL.DISTANCE_LIST}`, options);
+Request.GetDistanceList = (options, headers) =>{
+	return http.get(`${URL.DISTANCE_LIST}`, options, {'token': JSON.stringify(headers)});
 }
-Request.DeliverProducts = (options) =>{
-	return http.get(`${URL.DELIVER_PRODUCTS}`, options);
+Request.DeliverProducts = (options, headers) =>{
+	return http.get(`${URL.DELIVER_PRODUCTS}`, options, {'token': JSON.stringify(headers)});
 }
-Request.OnShelvesProducts = (options) =>{
-	return http.get(`${URL.ONSHELVES_PRODUCTS}`, options);
+Request.OnShelvesProducts = (options, headers) =>{
+	return http.get(`${URL.ONSHELVES_PRODUCTS}`, options, {'token': JSON.stringify(headers)});
 }
-Request.CheckStoreProducts = (options) =>{
-	return http.get(`${URL.CHECKSTORE_PRODUCTS}`, options);
+Request.CheckStoreProducts = (options, headers) =>{
+	return http.get(`${URL.CHECKSTORE_PRODUCTS}`, options, {'token': JSON.stringify(headers)});
 }
-Request.OperationProducts = (options) =>{
-	return http.post(`${URL.POST_PRODUCT}`, options);
+Request.OperationProducts = (options, headers) =>{
+	return http.post(`${URL.POST_PRODUCT}`, options, {'token': JSON.stringify(headers)});
 }

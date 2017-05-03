@@ -32,7 +32,13 @@ export default {
         //响应事件
         Request.LoginOut();
         alert("获取到了页面要关闭的事件了！"); 
-    }); 
+    });
+    // wx.closeWindow(function(){
+    //   alert("我关了");
+    // });
+    // document.addEventListener('visibilitychange', function(){
+    //   alert(document.visibilityState);
+    // });
   }
 }
 </script>

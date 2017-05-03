@@ -28,7 +28,7 @@
 	</div>
 </template>
 <script>
-	import { mapActions } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
 	import { Request } from 'service/requests' 
 	export default {
 		name: 'search',
@@ -48,6 +48,7 @@
 	  	},
 	  	methods: {
 	  		...mapActions(['setName', 'setUser']),
+	  		...mapGetters(['getCurrentUser']),
 	  		open(){
 	  			this.showCover = true;
 	  		},
@@ -64,7 +65,7 @@
 	  		}
 	  	},
 	  	created(){
-	  		Request.GetUsers().then((data)=>{
+	  		Request.GetUsers({}, this.getCurrentUser()).then((data)=>{
 	  			this.items = data;
 	  		});
 	  	}

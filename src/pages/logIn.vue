@@ -51,7 +51,7 @@
 			}
 		},
 		methods: {
-			...mapActions(['setLoading']),
+			...mapActions(['setLoading', 'setCurrentUser']),
 			logIn:function(){
 	      		this.setLoading(true);
 	      		
@@ -60,6 +60,9 @@
 	      			Password: this.Password,
 	      			Role: this.Role
 	      		}).then(function(res){
+	      			this.setLoading(false);
+	      			if(!res) return;
+	      			this.setCurrentUser({UserId: res.UserId, UserName: res.UserName});
 	       			if(res.RoleId == 1){
 	       				this.$router.replace({path: '/distanceList'});
 	       			}else if(res.RoleId == 2){
@@ -69,7 +72,6 @@
 	       			}else{
 	       				this.$router.replace({path: '/'});
 	       			}
-	       			this.setLoading(false);
 	       		}.bind(this));
 			}
 		}

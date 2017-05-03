@@ -32,7 +32,7 @@
 <script>
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
-	import { mapState, mapActions } from 'vuex'
+	import { mapState, mapActions, mapGetters } from 'vuex'
 	export default{
 		name: 'distance',
 		data(){
@@ -51,6 +51,7 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
+			...mapGetters(['getCurrentUser']),
 			GetDistanceList(){
 				this.items = this.allItems.filter((x)=>{
 		 			return x.ShopName.indexOf(this.name)>-1
@@ -90,13 +91,24 @@
 		  	 		this.current.key = key;
 		  	 		this.current.value = 1;
 		  	 	}
-		  	 	this.items.sort((pre, next)=>{
-		  	 		if(this.current.value){//true为升序1
-		  	 			return pre[key] > next[key];
-		  	 		}else{
-						return pre[key] < next[key];
+		  	 	for(let i = 0; i< this.items.length-1; i++){
+		  	 		for(let j=i + 1; j< this.items.length; j++){
+		  	 			if(this.current.value)//true为升序1
+		 				{
+		 					if(this.items[i][key] > this.items[j][key]){
+			  	 				let temp = this.items[i][key];
+			  	 				this.items[i][key] = this.items[j][key];
+			  	 				this.items[j][key] = temp;
+			  	 			}
+		 				}else{
+		 					if(this.items[i][key] < this.items[j][key]){
+			  	 				let temp = this.items[i][key];
+			  	 				this.items[i][key] = this.items[j][key];
+			  	 				this.items[j][key] = temp;
+			  	 			}
+		 				}
 		  	 		}
-		  	 	});
+		  	 	}
 		  	 }
 		},
 		computed: mapState({
@@ -114,7 +126,7 @@
 		created(){
 			// this.getLocation();
 			this.setLoading(true);
-			Request.GetDistanceList().then((data)=>{
+			Request.GetDistanceList({}, this.getCurrentUser()).then((data)=>{
 				this.items = data;
 				this.allItems = data;
 				this.setLoading(false);

@@ -31,7 +31,7 @@
 <script>
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
-	import { mapState, mapActions } from 'vuex'
+	import { mapState, mapActions, mapGetters } from 'vuex'
 	import { default as message } from 'lib/message'
 	export default {
 		name: 'productOn',
@@ -56,6 +56,7 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
+			...mapGetters(['getCurrentUser']),
 			add(item){
 				item.RecommendOnShelvesAmount ++;
 			},
@@ -84,7 +85,7 @@
 					ShopId: this.id,
 					ProductList: newItems,
 					OperationType: 0
-				}).then((data)=>{
+				}, this.getCurrentUser()).then((data)=>{
 					message.success("上货成功！");
 					this.loadData();
 					this.setLoading(false);
@@ -95,7 +96,7 @@
 				this.setLoading(true);
 				Request.OnShelvesProducts({
 					shopid: this.id
-				}).then((data)=>{
+				}, this.getCurrentUser()).then((data)=>{
 					this.items = data;
 					this.allItems = data;
 					this.GetProductList();

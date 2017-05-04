@@ -98,8 +98,7 @@ export default {
   	 	return [date.getMonth()+1, date.getDate()].join('/');
   	 },
   	 time(value){
-  	 	let date = new Date(value.substr(0,19).replace("T", " ").replace(/-/g, "/"));
-  	 	return [date.getHours(), date.getMinutes()].join(':');
+  	 	return value.replace(/^(.)*T(\d{2}):(\d{2}):(\d{2})(.)*$/,'$2:$3');
   	 }
   },
   created(){

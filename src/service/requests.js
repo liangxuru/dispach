@@ -33,5 +33,5 @@ Request.CheckStoreProducts = (options, headers) =>{
 	return http.get(`${URL.CHECKSTORE_PRODUCTS}`, options);
 }
 Request.OperationProducts = (options, headers) =>{
-	return http.post(`${URL.POST_PRODUCT}`, options);
+	return http.post(`${URL.OPERATE_PRODUCT}`, options);
 }

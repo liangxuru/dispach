@@ -29,7 +29,7 @@
 <script>
 import search from 'components/search'
 import { Request } from 'service/requests' 
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'shopList',
   data () {
@@ -57,7 +57,6 @@ export default {
   },
   methods: {
   	 ...mapActions(['setLoading']),
-  	 ...mapGetters(['getCurrentUser']),
   	 GetShopList(){
   	 	this.items = this.allItems.filter((x)=>{
  			return x.ShopName && x.ShopName.indexOf(this.name)>-1
@@ -99,13 +98,13 @@ export default {
   	 	return [date.getMonth()+1, date.getDate()].join('/');
   	 },
   	 time(value){
-  	 	let date = new Date(value);
+  	 	let date = new Date(value.replace(/\T/, ' '));
   	 	return [date.getHours(), date.getMinutes()].join(':');
   	 }
   },
   created(){
   	this.setLoading(true);
-  	Request.GetShopList({}, this.getCurrentUser()).then(function(data){
+  	Request.GetShopList({}).then(function(data){
   		this.allItems = data;
  		this.items = data;
  		this.GetShopList();

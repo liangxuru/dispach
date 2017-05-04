@@ -38,7 +38,7 @@
 <script>
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
-	import { mapState, mapActions, mapGetters } from 'vuex'
+	import { mapState, mapActions } from 'vuex'
 	import { default as message } from 'lib/message'
 	export default {
 		name: 'shopInfo',
@@ -66,7 +66,6 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
-			...mapGetters(['getCurrentUser']),
 			GetProductList(){
 				this.items = this.items.filter(function(x){
 					return x.ProductName.indexOf(this.name)>-1
@@ -95,7 +94,7 @@
 					ShopId: this.id,
 					ProductList: newItems,
 					OperationType: this.OperationType
-				}, this.getCurrentUser()).then((data)=>{
+				}).then((data)=>{
 					message.success("下架成功！");
 					this.shelves = false;
 					this.loadData();
@@ -110,7 +109,7 @@
 				Request.DeliverProducts({
 					shopid: this.id,
 					pickTime: new Date()
-				}, this.getCurrentUser()).then((data)=>{
+				}).then((data)=>{
 					this.items = data;
 					this.GetProductList();
 					this.setLoading(false);

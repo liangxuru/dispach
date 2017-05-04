@@ -32,7 +32,7 @@
 <script>
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
-	import { mapState, mapActions, mapGetters } from 'vuex'
+	import { mapState, mapActions } from 'vuex'
 	export default{
 		name: 'distance',
 		data(){
@@ -51,7 +51,6 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
-			...mapGetters(['getCurrentUser']),
 			GetDistanceList(){
 				this.items = this.allItems.filter((x)=>{
 		 			return x.ShopName.indexOf(this.name)>-1
@@ -126,7 +125,7 @@
 		created(){
 			// this.getLocation();
 			this.setLoading(true);
-			Request.GetDistanceList({}, this.getCurrentUser()).then((data)=>{
+			Request.GetDistanceList().then((data)=>{
 				this.items = data;
 				this.allItems = data;
 				this.setLoading(false);

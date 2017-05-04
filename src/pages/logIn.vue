@@ -14,7 +14,7 @@
 		</div>			
 		</div>
 		<div class="line_1"></div>
-		<div class="login_select">
+		<!-- <div class="login_select">
 			选择角色
 		</div>
 		<div class="line_1"></div>
@@ -31,7 +31,7 @@
 				<input type="radio" name="Role" value="3" v-model="Role" id="role3"><label for="role3">配送员</label>
 			</div>			
 		</div>
-		<div class="line_1"></div>
+		<div class="line_1"></div> -->
 		<button class="login_button"  @click="logIn">
 			登 录
 		</button>
@@ -40,6 +40,7 @@
 <script>
 	import { Request } from 'service/requests'
 	import { mapState, mapActions } from 'vuex'
+	import { WebStorageCache } from 'lib/StorageCache'
 	export default {
 		name: 'logIn',
 		data(){
@@ -62,7 +63,7 @@
 	      		}).then(function(res){
 	      			this.setLoading(false);
 	      			if(!res) return;
-	      			this.setCurrentUser({UserId: res.UserId, UserName: res.UserName});
+	      			WebStorageCache.set("token", {UserId: res.UserId, UserName: res.UserName});
 	       			if(res.RoleId == 1){
 	       				this.$router.replace({path: '/distanceList'});
 	       			}else if(res.RoleId == 2){

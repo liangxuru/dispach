@@ -31,7 +31,7 @@
 <script>
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
-	import { mapState, mapActions, mapGetters } from 'vuex'
+	import { mapState, mapActions } from 'vuex'
 	import { default as message } from 'lib/message'
 	export default {
 		name: 'productList',
@@ -63,7 +63,6 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
-			...mapGetters(['getCurrentUser']),
 			add(item){
 				item.PickAmount ++;
 			},
@@ -85,16 +84,18 @@
 						ProductCount: item.PickAmount
 					});
 				});
-				
+
 				Request.PickProduct({
 					shopid: this.id,
 					ProductList: newItems,
 					PickStartTime: this.now
-				}, this.getCurrentUser()).then((data)=>{
+				}).then((data)=>{
 					this.showBtn = false;
 					this.setLoading(false);
 					message.success("捡货成功");
-					this.$router.replace({path: '/shopList'});
+					setTimeout(()=>{
+						this.$router.replace({path: '/shopList'});
+					}, 1000);
 				});
 			}
 		},
@@ -108,7 +109,7 @@
 				shopid: this.id,
 				pickTime: this.now,
 				lastPickTime: this.time.replace(/T/, ' ')
-			}, this.getCurrentUser()).then((data)=>{
+			}).then((data)=>{
 				this.allItems = data;
 				this.items = data;
 				this.GetProductList();

@@ -31,7 +31,7 @@
 <script>
 	import search from 'components/search'
 	import { Request } from 'service/requests' 
-	import { mapState, mapActions, mapGetters } from 'vuex'
+	import { mapState, mapActions } from 'vuex'
 	import { default as message } from 'lib/message'
 	export default {
 		name: 'productCheck',
@@ -55,7 +55,6 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
-			...mapGetters(['getCurrentUser']),
 			add(item){
 				item.RecommendOnShelvesAmount ++;
 			},
@@ -84,18 +83,20 @@
 					ShopId: this.id,
 					ProductList: newItems,
 					OperationType: 0
-				}, this.getCurrentUser()).then((data)=>{
+				}).then((data)=>{
 					message.success("盘点成功！");
 					this.loadData();
 					this.setLoading(false);
-					this.$router.replace({path: '/distanceList'});
+					setTimeout(()=>{
+						this.$router.replace({path: '/distanceList'});
+					}, 1000);
 				});
 			},
 			loadData(){
 				this.setLoading(true);
 				Request.CheckStoreProducts({
 					shopid: this.id
-				}, this.getCurrentUser()).then((data)=>{
+				}).then((data)=>{
 					this.allItems = data;
 					this.items = data;
 					this.GetProductList();

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import { default as message } from 'lib/message'
 import router from '../router/index'
-
+import { WebStorageCache } from 'lib/StorageCache'
 
 //启用http请求插件
 Vue.use(VueResource);
@@ -40,6 +40,7 @@ var request = (options) => {
 export const http = {};
 ['get', 'post', 'put', 'delete'].forEach(method => {
     http[method] = (url, params, headers = {}) => {
+        headers["token"] = JSON.stringify(WebStorageCache.get("token"));
         if (method === 'get') {
             return request({ url, params, method: method, headers: headers });
         }

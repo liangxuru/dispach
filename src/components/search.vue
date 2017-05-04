@@ -87,7 +87,7 @@
 		position: relative;
 		display: -webkit-box;
 		.menu{
-			.px2rem(width, 64);
+			.px2rem(width, 75);
 			color: #fff;
 			height: 100%;
 			.px2rem(line-height, 120);

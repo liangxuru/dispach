@@ -14,24 +14,6 @@
 		</div>			
 		</div>
 		<div class="line_1"></div>
-		<!-- <div class="login_select">
-			选择角色
-		</div>
-		<div class="line_1"></div>
-		<div class="login_item">
-			<div class="divdiv">
-				<input type="radio" name="Role" value="1" v-model="Role" id="role1"><label for="role1">管理员</label>
-			</div>
-			<div class="line_2"></div>
-			<div class="divdiv">
-				<input type="radio" name="Role" value="2" v-model="Role" id="role2"><label for="role2">拣货员</label>
-			</div>
-			<div class="line_2"></div>
-			<div class="divdiv">
-				<input type="radio" name="Role" value="3" v-model="Role" id="role3"><label for="role3">配送员</label>
-			</div>			
-		</div>
-		<div class="line_1"></div> -->
 		<button class="login_button"  @click="logIn">
 			登 录
 		</button>

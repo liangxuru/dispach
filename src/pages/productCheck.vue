@@ -23,7 +23,7 @@
 			</table>
 		</section>
 		<section class="empty"></section>
-		<section class="footer" @click="confirm()">
+		<section class="footer" @click="confirm()" v-if="showBtn">
 			<a class="btn">盘点完成</a>
 		</section>
 	</div>
@@ -39,7 +39,8 @@
 			return {
 				showMe: true,
 				allItems: [],
-				items: []
+				items: [],
+				showBtn: true
 			}
 		},
 		components: {
@@ -65,6 +66,8 @@
 				this.items = this.allItems.filter(function(x){
 					return x.ProductName.indexOf(this.name)>-1
 				}.bind(this));
+
+				this.showBtn = this.items.length>0;
 			},
 			confirm(){
 				this.setLoading(true);

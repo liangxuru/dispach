@@ -73,6 +73,8 @@
 				this.items = this.allItems.filter(function(x){
 					return x.ProductName.indexOf(this.name)>-1
 				}.bind(this));
+
+				this.showBtn = this.items.length>0;
 			},
 			confirm(){
 				this.setLoading(true);

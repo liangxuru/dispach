@@ -79,15 +79,15 @@ export default {
   	 			if(this.current.value)//true为升序1
  				{
  					if(this.items[i][key] > this.items[j][key]){
-	  	 				let temp = this.items[i][key];
-	  	 				this.items[i][key] = this.items[j][key];
-	  	 				this.items[j][key] = temp;
+	  	 				let temp = this.items[i];
+	  	 				this.items[i] = this.items[j];
+	  	 				this.items[j] = temp;
 	  	 			}
  				}else{
  					if(this.items[i][key] < this.items[j][key]){
-	  	 				let temp = this.items[i][key];
-	  	 				this.items[i][key] = this.items[j][key];
-	  	 				this.items[j][key] = temp;
+	  	 				let temp = this.items[i];
+	  	 				this.items[i] = this.items[j];
+	  	 				this.items[j] = temp;
 	  	 			}
  				}
   	 		}
@@ -98,7 +98,7 @@ export default {
   	 	return [date.getMonth()+1, date.getDate()].join('/');
   	 },
   	 time(value){
-  	 	let date = new Date(value.replace(/\T/, ' '));
+  	 	let date = new Date(value.substr(0,19).replace("T", " ").replace(/-/g, "/"));
   	 	return [date.getHours(), date.getMinutes()].join(':');
   	 }
   },

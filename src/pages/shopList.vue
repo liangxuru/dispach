@@ -94,8 +94,7 @@ export default {
   	 	}
   	 },
   	 date(value){
-  	 	let date = new Date(value);
-  	 	return [date.getMonth()+1, date.getDate()].join('/');
+  	 	return value.replace(/^(\d{4})-(\d{2})-(\d{2})(.)*/, '$2/$3');
   	 },
   	 time(value){
   	 	return value.replace(/^(.)*T(\d{2}):(\d{2}):(\d{2})(.)*$/,'$2:$3');

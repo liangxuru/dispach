@@ -85,7 +85,7 @@
 				Request.OperationProducts({
 					ShopId: this.id,
 					ProductList: newItems,
-					OperationType: 0
+					OperationType: 1
 				}).then((data)=>{
 					message.success("盘点成功！");
 					this.loadData();

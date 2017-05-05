@@ -95,15 +95,11 @@
 		  	 			if(this.current.value)//true为升序1
 		 				{
 		 					if(this.items[i][key] > this.items[j][key]){
-			  	 				let temp = this.items[i];
-			  	 				this.items[i] = this.items[j];
-			  	 				this.items[j] = temp;
+			  	 				[this.items[i],this.items[j]] = [this.items[j],this.items[i]];
 			  	 			}
 		 				}else{
 		 					if(this.items[i][key] < this.items[j][key]){
-			  	 				let temp = this.items[i];
-			  	 				this.items[i] = this.items[j];
-			  	 				this.items[j] = temp;
+			  	 				[this.items[i],this.items[j]] = [this.items[j],this.items[i]];
 			  	 			}
 		 				}
 		  	 		}

@@ -45,7 +45,7 @@
 	      		}).then(function(res){
 	      			this.setLoading(false);
 	      			if(!res) return;
-	      			WebStorageCache.set("token", {UserId: res.UserId, UserName: res.UserName});
+	      			WebStorageCache.set("token", res);
 	       			if(res.RoleId == 1){
 	       				this.$router.replace({path: '/distanceList'});
 	       			}else if(res.RoleId == 2){

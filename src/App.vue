@@ -14,6 +14,7 @@ import "./styles/common.less"
 import { mapState, mapActions } from 'vuex'
 import { Request } from 'service/requests' 
 import ScaleLoader from 'components/ScaleLoader'
+import { WebStorageCache } from 'lib/StorageCache'
 export default {
   name: 'app',
   computed: mapState({
@@ -31,6 +32,7 @@ export default {
     $(window).unload(function(){
         //响应事件
         Request.LoginOut();
+        WebStorageCache.remove("token");
     });
     // wx.closeWindow(function(){
     //   alert("我关了");

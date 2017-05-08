@@ -121,15 +121,5 @@
 		margin-left: 5%;
 		padding-top: 21px;
 	}
-	.login_button{
-		width:90%;
-		height: 49px;
-		margin:35px 5% 0 5%;
-		font-size: 16px;
-		color: white;
-		background: @baseFontColor;
-		border:none;
-		outline: none;
-		border-radius: 5px;
-	}
+	
 </style>

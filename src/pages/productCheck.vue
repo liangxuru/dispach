@@ -15,7 +15,7 @@
 					<tr v-for="item in items">
 						<td><div class="box">{{ item.ProductName }}</div></td>
 						<td>{{ item.RemainderAmount }}</td>
-						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.RecommendOnShelvesAmount" :value="item.RemainderAmount" /><a class="add" @click="add(item)"></a></td>
+						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.RecommendOnShelvesAmount" :value="item.RemainderAmount"  size="5" maxlength="5" @keyup='item.RecommendOnShelvesAmount=item.RecommendOnShelvesAmount.replace(/\D/gi,"")' /><a class="add" @click="add(item)"></a></td>
 					</tr>
 				</tbody>
 				<tfoot v-if="items.length == 0" class="f24">

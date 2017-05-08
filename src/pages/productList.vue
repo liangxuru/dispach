@@ -14,8 +14,8 @@
 				<tbody class="f24">
 					<tr v-for="item in items">
 						<td><div class="box">{{ item.ProductName }}</div></td>
-						<td>{{ item.FullAmount }}</td>
-						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.PickAmount" /><a class="add" @click="add(item)"></a></td>
+						<td>{{ item.AllSaleAmount }}</td>
+						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.PickAmount" size="5" maxlength="5" @keyup='item.PickAmount=item.PickAmount.replace(/\D/gi,"")'><a class="add" @click="add(item)"></a></td>
 					</tr>
 				</tbody>
 				<tfoot v-if="items.length == 0" class="f24">
@@ -51,11 +51,13 @@
 		components: {
 			search
 		},
-		computed: mapState({
-			name: state => state.shop.name,
-			user: state => state.shop.user
-		  }),
-		  watch: {
+		computed: {
+			...mapState({
+				name: state => state.shop.name,
+				user: state => state.shop.user
+			})
+		},
+		watch: {
 		  	name: function(){
 		  		this.GetProductList();
 		  	},
@@ -101,6 +103,9 @@
 						this.$router.replace({path: '/shopList'});
 					}, 1000);
 				});
+			},
+			changeSta(value){debugger;
+				value = 10;
 			}
 		},
 		created(){

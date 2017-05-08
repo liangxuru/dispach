@@ -29,7 +29,7 @@
 		</section>
 		<section class="shelves" v-if="shelves">
 			<div class="f30">{{ info.ProductName }}</div>
-			<div class="count f26"><span>下架数量</span><span><input type="text" v-model="count" /></span></div>
+			<div class="count f26"><span>下架数量</span><span><input type="text" v-model="count" size="5" maxlength="5" @keyup='count=count.replace(/\D/gi,"")'/></span></div>
 			<div class="select f26" @click="select()"><i :class="{'selected': OperationType === 3}"></i><span>将该商品状态变为下架</span></div>
 			<div><a class="btn" @click="confirm()">确定</a></div>
 		</section>
@@ -61,6 +61,11 @@
 		computed: mapState({
 			name: state => state.shop.name
 		}),
+		computed: {
+			...mapState({
+				name: state => state.shop.name
+			})
+		},
 		watch: {
 		  name: function(){
 		  	this.GetProductList();

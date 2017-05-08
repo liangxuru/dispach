@@ -44,6 +44,7 @@ var request = (options) => {
         }else if(result.StatusCode == 302){
             message.error(result.ErrorMessage);
             router.replace('/login');
+            $("#app .cover").hide();
         }
     }).catch((response)=>{
         message.error('data load error~~');
@@ -61,3 +62,6 @@ export const http = {};
         return request({ url, body: params, method: method, headers: headers });
     };
 });
+
+
+new Vue();

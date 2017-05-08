@@ -4,7 +4,7 @@
       <transition name="router-fade" mode="out-in">
         <router-view></router-view>
       </transition>
-      <scale-loader v-bind:loading="isLoading"></scale-loader>
+      <scale-loader v-bind:loading="isLoading" ref="load"></scale-loader>
     </div>
   </div>
 </template>
@@ -34,12 +34,6 @@ export default {
         Request.LoginOut();
         WebStorageCache.remove("token");
     });
-    // wx.closeWindow(function(){
-    //   alert("我关了");
-    // });
-    // document.addEventListener('visibilitychange', function(){
-    //   alert(document.visibilityState);
-    // });
   }
 }
 </script>

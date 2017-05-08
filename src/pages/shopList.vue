@@ -6,14 +6,16 @@
 			<table class="table bg">
 				<thead class="f26">
 					<tr>
-						<th>名称</th>
-						<th class="sort" :class="{'current': current.key=='TotalAmount'}" @click="sort('TotalAmount')">销售额<span class="asds"><i class="asc" :class="{'active': current.value === 1}"></i><i class="desc" :class="{'active': current.value === 0}"></i></span></th>
-						<th class="sort" :class="{'current': current.key=='PickTime'}" @click="sort('PickTime')">上次时间<span class="asds"><i class="asc" :class="{'active': current.value === 1}"></i><i class="desc" :class="{'active': current.value === 0}"></i></span></th>
-						<th>操作</th>
+						<th style="width: 10%"></th>
+						<th style="width: 35%">名称</th>
+						<th style="width: 15%" class="sort" :class="{'current': current.key=='TotalAmount'}" @click="sort('TotalAmount')">销售额<span class="asds"><i class="asc" :class="{'active': current.value === 1}"></i><i class="desc" :class="{'active': current.value === 0}"></i></span></th>
+						<th style="width: 20%" class="sort" :class="{'current': current.key=='PickTime'}" @click="sort('PickTime')">上次时间<span class="asds"><i class="asc" :class="{'active': current.value === 1}"></i><i class="desc" :class="{'active': current.value === 0}"></i></span></th>
+						<th style="width: 20%">操作</th>
 					</tr>
 				</thead>
 				<tbody class="f24">
 					<tr v-for="item in items">
+						<td><div :class="{'point': item.PickStatus!=1}"></div></td>
 						<td><div class="box">{{ item.ShopName }}</div></td>
 						<td>{{ item.TotalAmount | currency }}</td>
 						<td>{{ date(item.PickTime) }}<br/>{{ time(item.PickTime) }}</td>
@@ -121,10 +123,6 @@ export default {
 				padding: .4rem 0;
 				text-align: center;
 				vertical-align: middle;
-				width: 20%;
-				&:first-of-type{
-					width: 40%;
-				}
 			}
 			.sort{
 				position: relative;

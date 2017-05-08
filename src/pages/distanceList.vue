@@ -203,14 +203,7 @@
 					border-top-color: @baseFontColor
 				}
 			}
-			.point{
-				margin: 0 auto;
-				content: "";
-				height: 6px;
-				width: 6px;
-				border-radius: 50%;
-				background-color: @baseFontColor;
-			}
+			
 		}
 	}
 	.tip{

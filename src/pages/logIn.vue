@@ -1,41 +1,62 @@
 <template>
-	<div class="content" v-if="showMe">
-		<div class="login_head">
-			账号登录
+	<div class="content">
+		<div v-if="!state">
+			<div class="login_head">
+				账号登录
+			</div>
+			<div class="line_1"></div>
+			<div class="login_input">
+			<div class="div">
+				<label for="user">账号</label><input type="text" name="UserName" placeholder="输入登录账号" v-model="UserName">
+			</div>
+			<div class="line_2"></div>
+			<div class="div">
+				<label for="psd">密码</label><input type="password" name="Password" placeholder="输入登录密码" v-model="Password">
+			</div>			
+			</div>
+			<div class="line_1"></div>
+			<button class="login_button"  @click="logIn">
+				登 录
+			</button>
 		</div>
-		<div class="line_1"></div>
-		<div class="login_input">
-		<div class="div">
-			<label for="user">账号</label><input type="text" name="UserName" placeholder="输入登录账号" v-model="UserName">
+		<div v-else>
+			<div class="bg part">
+			    <div class="unbind f26">
+			        <span>当前绑定账号：<i>{{ UserName }}</i></span>
+			    </div>
+			    <button class="login_button" @click="logout">
+					解除绑定
+				</button>
+			</div>
 		</div>
-		<div class="line_2"></div>
-		<div class="div">
-			<label for="psd">密码</label><input type="password" name="Password" placeholder="输入登录密码" v-model="Password">
-		</div>			
-		</div>
-		<div class="line_1"></div>
-		<button class="login_button"  @click="logIn">
-			登 录
-		</button>
 	</div>
 </template>
 <script>
 	import { Request } from 'service/requests'
 	import { mapState, mapActions } from 'vuex'
 	import { WebStorageCache } from 'lib/StorageCache'
+	import { default as message } from 'lib/message'
 	export default {
 		name: 'logIn',
 		data(){
 			return {
-				showMe: true,
-				UserName:'jhy001',
-				Password:'123456',
+				state: false, //登录状态
+				UserName:'',
+				Password:'',
 				Role:2
 			}
 		},
 		methods: {
 			...mapActions(['setLoading', 'setCurrentUser']),
 			logIn:function(){
+				if(!this.UserName){
+					message.error("输入登录账号");
+					return;
+				}
+				if(!this.Password){
+					message.error("输入登录密码");
+					return;
+				}
 	      		this.setLoading(true);
 	      		
 	      		Request.Login({
@@ -57,6 +78,21 @@
 	       				this.$router.replace({path: '/'});
 	       			}
 	       		}.bind(this));
+			},
+			logout: function(){
+	      		this.setLoading(true);
+	      		Request.LoginOut();
+        		WebStorageCache.remove("token");
+        		this.setLoading(false);
+        		this.UserName = '';
+        		this.state = false;
+			}
+		},
+		mounted(){
+			let user = WebStorageCache.get("token");
+			if(user.hasOwnProperty("UserName")){
+				this.state = true;
+				this.UserName = user.UserName || '';
 			}
 		}
 	}
@@ -120,6 +156,18 @@
 		height: 28px;
 		margin-left: 5%;
 		padding-top: 21px;
+	}
+	.part{
+		padding: .8rem .4rem;
+		.unbind{
+			width: 90%;
+			margin: 0 auto;
+			padding: .4rem;
+			border: 1px solid #e9e9e9;
+			background-color: #f0f3f2;
+			border-radius: 6px;
+	    	box-sizing: border-box;
+		}
 	}
 	
 </style>

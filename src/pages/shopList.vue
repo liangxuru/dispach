@@ -1,8 +1,9 @@
 <template>
 	<div class="content" v-if="showMe">
 		<search></search>
+
 		<section class="list">
-			<table class="table">
+			<table class="table bg">
 				<thead class="f26">
 					<tr>
 						<th>名称</th>
@@ -16,7 +17,7 @@
 						<td><div class="box">{{ item.ShopName }}</div></td>
 						<td>{{ item.TotalAmount | currency }}</td>
 						<td>{{ date(item.PickTime) }}<br/>{{ time(item.PickTime) }}</td>
-						<td><a class="btn-sm f26" v-bind:href="`#/productList?id=${item.ShopId}&time=${item.PickTime}`">捡货</a></td>
+						<td><a class="btn-sm f26" v-bind:href="`#/productList?id=${item.ShopId}&time=${item.PickTime}&name=${item.ShopName}`">捡货</a></td>
 					</tr>
 				</tbody>
 				<tfoot v-if="items.length == 0" class="f24">
@@ -111,7 +112,6 @@ export default {
 	@import '../styles/common';
 	.list{
 		.px2rem(margin-top, 140);
-		background-color: #fff;
 		.table{
 			width: 100%;
 			tbody tr{

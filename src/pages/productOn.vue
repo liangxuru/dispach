@@ -2,7 +2,8 @@
 	<div class="content" v-if="showMe">
 		<search v-bind:showMenu="false"></search>
 		<section class="list">
-			<table class="table">
+			<div class="f26 title sub">{{spname}}</div>
+			<table class="table bg">
 				<thead class="f26">
 					<tr>
 						<th>名称</th>
@@ -41,7 +42,8 @@
 				allItems: [],
 				items: [],
 				id: 0,
-				showBtn: true
+				showBtn: true,
+				spname: ''
 			}
 		},
 		components: {
@@ -110,6 +112,7 @@
 		},
 		created(){
 			this.id = this.$route.query.id;
+			this.spname = this.$route.query.name;
 			this.loadData();
 		}
 	}
@@ -118,7 +121,6 @@
 	@import '../styles/common';
 	.list{
 		.px2rem(margin-top, 140);
-		background-color: #fff;
 		.table{
 			width: 100%;
 			tbody tr{

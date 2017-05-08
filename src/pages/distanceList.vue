@@ -62,7 +62,7 @@
 		 		}
 			},
 			select(item){
-				this.$router.push({path: '/shopInfo', query: { id: item.ShopId }});
+				this.$router.push({path: '/shopInfo', query: { id: item.ShopId, name: item.ShopName }});
 			},
 			getLocation(){
 				// function showPosition(position){

@@ -55,9 +55,9 @@
 				this.items = this.allItems.filter((x)=>{
 		 			return x.ShopName.indexOf(this.name)>-1
 		 		});
-		 		if(this.user.UserId){
+		 		if(this.user && this.user.ShopId && this.user.ShopId.length){
 			 		this.items = this.items.filter((x)=>{
-			 			return x.DeliveryManId  == this.user.UserId
+			 			return this.user.ShopId.indexOf(x.ShopId) > -1;
 			 		});
 		 		}
 			},

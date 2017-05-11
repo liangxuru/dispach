@@ -22,7 +22,7 @@
 		<div v-else>
 			<div class="bg part">
 			    <div class="unbind f26">
-			        <span>当前绑定账号：<i>{{ UserName }}</i></span>
+			        <span>当前绑定账号：<i>{{ UserName | lowercase }}</i></span>
 			    </div>
 			    <button class="login_button" @click="logout">
 					解除绑定
@@ -90,7 +90,7 @@
 		},
 		mounted(){
 			let user = WebStorageCache.get("token");
-			if(user.hasOwnProperty("UserName")){
+			if(user["UserName"]){
 				this.state = true;
 				this.UserName = user.UserName || '';
 			}

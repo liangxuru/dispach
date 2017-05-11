@@ -28,12 +28,6 @@ export default {
     window.addEventListener('load', function() {
       FastClick.attach(document.body);
     }, false);
-
-    $(window).unload(function(){
-        //响应事件
-        Request.LoginOut();
-        WebStorageCache.remove("token");
-    });
   }
 }
 </script>

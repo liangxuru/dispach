@@ -68,15 +68,16 @@
 	      			if(!res) return;
 	      			WebStorageCache.remove("token");
 	      			WebStorageCache.set("token", {UserId: res.UserId, UserName: res.UserName, RoleId: res.RoleId });
-	       			if(res.RoleId == 1){
-	       				this.$router.replace({path: '/distanceList'});
-	       			}else if(res.RoleId == 2){
-	       				this.$router.replace({path: '/shoplist'});
-	       			}else if(res.RoleId == 3){
-	       				this.$router.replace({path: '/distanceList'});
-	       			}else{
-	       				this.$router.replace({path: '/'});
-	       			}
+	      			this.state = true;
+	       			// if(res.RoleId == 1){
+	       			// 	this.$router.replace({path: '/distanceList'});
+	       			// }else if(res.RoleId == 2){
+	       			// 	this.$router.replace({path: '/shoplist'});
+	       			// }else if(res.RoleId == 3){
+	       			// 	this.$router.replace({path: '/distanceList'});
+	       			// }else{
+	       			// 	this.$router.replace({path: '/'});
+	       			// }
 	       		}.bind(this));
 			},
 			logout: function(){

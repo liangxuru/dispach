@@ -1,4 +1,5 @@
 import Login from '@/pages/logIn'
+import Home from '@/pages/home'
 import shopList from '@/pages/shopList'
 import productList from '@/pages/productList'
 import shopInfo from '@/pages/shopInfo'
@@ -15,6 +16,11 @@ export default [
 		path: '/login',
 		name: 'logIn',
 		component: Login
+	},
+	{
+		path: '/home',
+		name: 'home',
+		component: Home
 	},
 	{
 		path: '/shopList',

@@ -26,7 +26,7 @@ Vue.http.interceptors.push((request, next) => {
     })
 });
 //请求拦截
-const TIMEOUT = 5000;
+const TIMEOUT = 500000;
 var request = (options) => {
     return Promise.all([Vue.http({
         headers: options.headers,

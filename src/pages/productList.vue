@@ -24,8 +24,9 @@
 			</table>
 		</section>
 		<section class="empty" v-if="showBtn"></section>
-		<section class="footer" @click="confirm()" v-if="showBtn">
-			<a class="btn">确认完成</a>
+		<section class="footer" v-if="showBtn">
+			<div @click="confirm(2)"><a class="btn">分批拣货</a></div>
+			<div @click="confirm(1)"><a class="btn">确认完成</a></div>
 		</section>
 	</div>
 </template>
@@ -80,21 +81,23 @@
 
 				this.showBtn = this.items.length>0;
 			},
-			confirm(){
+			confirm(type){debugger;
 				this.setLoading(true);
 				let newItems = [];
 				this.items.map((item,i)=>{
 					newItems.push({
 						ProductId: item.ProductId,
 						ProductName: item.ProductName,
-						ProductCount: item.PickAmount
+						ProductCount: item.PickAmount,
+						AllSaleAmount: item.AllSaleAmount
 					});
 				});
 
 				Request.PickProduct({
 					shopid: this.id,
 					ProductList: newItems,
-					PickStartTime: this.now
+					PickStartTime: this.now,
+					type: type
 				}).then((data)=>{
 					this.showBtn = false;
 					this.setLoading(false);
@@ -104,7 +107,7 @@
 					}, 1000);
 				});
 			},
-			changeSta(value){debugger;
+			changeSta(value){
 				value = 10;
 			}
 		},
@@ -182,6 +185,20 @@
 				position: relative;
 			    top: -9px;
 			    text-align: center;
+			}
+		}
+	}
+	.footer{
+		display: flex;
+		div{
+			display: inline-block;
+			flex: 1;
+			.px2rem(margin-right, 30);
+			.px2rem(width, 315);
+			.px2rem(height, 80);
+			text-align: left;
+			&:last-child{
+				margin-right: 0;
 			}
 		}
 	}

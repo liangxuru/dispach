@@ -61,7 +61,7 @@
 	  			this.showCover = false;
 	  		},
 	  		search(){
-	  			this.setName(this.UserName);
+	  			this.setName(this.name);
 	  		}
 	  	},
 	  	created(){

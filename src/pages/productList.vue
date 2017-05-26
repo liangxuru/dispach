@@ -61,9 +61,6 @@
 		watch: {
 		  	name: function(){
 		  		this.GetProductList();
-		  	},
-		  	user: function(){
-		  		this.GetProductList();
 		  	}
 		},
 		methods: {

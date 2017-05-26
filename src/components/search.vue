@@ -68,6 +68,8 @@
 	  		Request.GetUsers({}, this.getCurrentUser()).then((data)=>{
 	  			this.items = data;
 	  		});
+	  		this.setName(this.name);
+	  		this.setUser({});
 	  	}
 	}
 </script>

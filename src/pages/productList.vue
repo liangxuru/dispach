@@ -3,19 +3,21 @@
 		<search v-bind:showMenu="false"></search>
 		<section class="list">
 			<div class="f26 title sub">{{spname}}</div>
-			<table class="table bg">
+			<table class="table">
 				<thead class="f26">
-					<tr>
+					<tr class="bg">
+						<th></th>
 						<th>名称</th>
 						<th>推荐捡货量</th>
 						<th>实际捡货量</th>
 					</tr>
 				</thead>
 				<tbody class="f24">
-					<tr v-for="item in items">
+					<tr v-for="(item, index) in items" class="bg" :class="item.clicked?'clicked':''" @click="checked(item, $event)">
+						<td>{{ index + 1 }}</td>
 						<td><div class="box">{{ item.ProductName }}</div></td>
 						<td>{{ item.AllSaleAmount }}</td>
-						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.PickAmount" size="5" maxlength="5" @keyup='item.PickAmount=item.PickAmount.replace(/\D/gi,"")'><a class="add" @click="add(item)"></a></td>
+						<td><a class="subs" @click="sub(item, $event)"></a><input type="text" v-model="item.PickAmount" size="5" maxlength="5" @keyup='item.PickAmount=item.PickAmount.replace(/\D/gi,"")'><a class="add" @click="add(item, $event)"></a></td>
 					</tr>
 				</tbody>
 				<tfoot v-if="items.length == 0" class="f24">
@@ -28,10 +30,12 @@
 			<div @click="confirm(2)"><a class="btn">分批拣货</a></div>
 			<div @click="confirm(1)"><a class="btn">确认完成</a></div>
 		</section>
+		<modal v-bind:title="modalTitle" v-bind:showCover.sync="showCover"></modal>
 	</div>
 </template>
 <script>
 	import search from 'components/search'
+	import modal from 'components/modal'
 	import { Request } from 'service/requests' 
 	import { mapState, mapActions } from 'vuex'
 	import { default as message } from 'lib/message'
@@ -46,11 +50,15 @@
 				time: '',
 				now: '',
 				showBtn: true,
-				spname: ''
+				spname: '',
+				type: 0,
+				showCover: false,
+				modalTitle: ""
 			}
 		},
 		components: {
-			search
+			search,
+			modal
 		},
 		computed: {
 			...mapState({
@@ -65,11 +73,16 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
-			add(item){
+			add(item, event){
 				item.PickAmount ++;
+				event.stopPropagation();
 			},
-			sub(item){
+			sub(item, event){
 				item.PickAmount>0 && item.PickAmount--;
+				event.stopPropagation();
+			},
+			checked(item){
+				this.$set(item, "clicked", !item.clicked);
 			},
 			GetProductList(){
 				this.items = this.allItems.filter(function(x){
@@ -78,7 +91,7 @@
 
 				this.showBtn = this.items.length>0;
 			},
-			confirm(type){debugger;
+			ok(){
 				this.setLoading(true);
 				let newItems = [];
 				this.items.map((item,i)=>{
@@ -94,15 +107,20 @@
 					shopid: this.id,
 					ProductList: newItems,
 					PickStartTime: this.now,
-					type: type
+					type: this.type
 				}).then((data)=>{
 					this.showBtn = false;
-					this.setLoading(false);
 					message.success("捡货成功");
 					setTimeout(()=>{
+						this.setLoading(false);
 						this.$router.replace({path: '/shopList'});
 					}, 1000);
 				});
+			},
+			confirm(type){
+				this.modalTitle = type == 1?"确认完成？":"确认分批拣货？";
+				this.type = type;
+				this.showCover = true;
 			},
 			changeSta(value){
 				value = 10;
@@ -136,14 +154,23 @@
 			width: 100%;
 			tbody tr{
 				border-top: 1px solid #d8d8d8;
+				&.clicked{
+					background-color: #eee;
+				}
+				&:last-of-type{
+					border-bottom: 1px solid #d8d8d8;
+				}
 			}
 			td, th{
 				padding: .4rem 0;
 				text-align: center;
 				vertical-align: middle;
 				width: 30%;
+				&:first-of-type{
+					width: 5%;
+				}
 				&:last-of-type{
-					width: 40%;
+					width: 35%;
 				}
 			}
 			.box{

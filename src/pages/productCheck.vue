@@ -3,19 +3,21 @@
 		<search v-bind:showMenu="false"></search>
 		<section class="list">
 			<div class="f26 title sub">{{spname}}</div>
-			<table class="table bg">
+			<table class="table">
 				<thead class="f26">
-					<tr>
+					<tr class="bg">
+						<th></th>
 						<th>名称</th>
 						<th>余量</th>
 						<th>实际余量</th>
 					</tr>
 				</thead>
 				<tbody class="f24">
-					<tr v-for="item in items">
+					<tr v-for="(item, index) in items" class="bg" :class="item.clicked?'clicked':''" @click="checked(item, $event)">
+						<td>{{ index + 1 }}</td>
 						<td><div class="box">{{ item.ProductName }}</div></td>
 						<td>{{ item.RemainderAmount }}</td>
-						<td><a class="subs" @click="sub(item)"></a><input type="text" v-model="item.RecommendOnShelvesAmount" :value="item.RemainderAmount"  size="5" maxlength="5" @keyup='item.RecommendOnShelvesAmount=item.RecommendOnShelvesAmount.replace(/\D/gi,"")' /><a class="add" @click="add(item)"></a></td>
+						<td><a class="subs" @click="sub(item, $event)"></a><input type="text" v-model="item.RecommendOnShelvesAmount" :value="item.RemainderAmount"  size="5" maxlength="5" @keyup='item.RecommendOnShelvesAmount=item.RecommendOnShelvesAmount.replace(/\D/gi,"")' /><a class="add" @click="add(item, $event)"></a></td>
 					</tr>
 				</tbody>
 				<tfoot v-if="items.length == 0" class="f24">
@@ -27,10 +29,12 @@
 		<section class="footer" @click="confirm()" v-if="showBtn">
 			<a class="btn">盘点完成</a>
 		</section>
+		<modal v-bind:title="modalTitle" v-bind:showCover.sync="showCover"></modal>
 	</div>
 </template>
 <script>
 	import search from 'components/search'
+	import modal from 'components/modal'
 	import { Request } from 'service/requests' 
 	import { mapState, mapActions } from 'vuex'
 	import { default as message } from 'lib/message'
@@ -42,11 +46,14 @@
 				allItems: [],
 				items: [],
 				showBtn: true,
-				spname: ''
+				spname: '',
+				showCover: false,
+				modalTitle: "确定盘点完成？"
 			}
 		},
 		components: {
-			search
+			search,
+			modal
 		},
 		computed: mapState({
 			name: state => state.shop.name
@@ -58,11 +65,13 @@
 		},
 		methods: {
 			...mapActions(['setLoading']),
-			add(item){
+			add(item, event){
 				item.RecommendOnShelvesAmount ++;
+				event.stopPropagation();
 			},
-			sub(item){
+			sub(item, event){
 				item.RecommendOnShelvesAmount>0 && item.RecommendOnShelvesAmount--;
+				event.stopPropagation();
 			},
 			GetProductList(){
 				this.items = this.allItems.filter(function(x){
@@ -71,8 +80,9 @@
 
 				this.showBtn = this.items.length>0;
 			},
-			confirm(){
+			ok(){
 				this.setLoading(true);
+				this.showBtn = false;
 				//确定下架操作
 				let newItems = [];
 				this.items.map((item, i)=>{
@@ -90,12 +100,15 @@
 					OperationType: 1
 				}).then((data)=>{
 					message.success("盘点成功！");
-					this.loadData();
-					this.setLoading(false);
+					// this.loadData();
 					setTimeout(()=>{
+						this.setLoading(false);
 						this.$router.replace({path: '/distanceList'});
 					}, 1000);
 				});
+			},
+			confirm(){
+				this.showCover = true;
 			},
 			loadData(){
 				this.setLoading(true);
@@ -107,7 +120,10 @@
 					this.GetProductList();
 					this.setLoading(false);
 				});
-			}
+			},
+			checked(item){
+				this.$set(item, "clicked", !item.clicked);
+			},
 		},
 		created(){
 			this.id = this.$route.query.id;
@@ -124,14 +140,23 @@
 			width: 100%;
 			tbody tr{
 				border-top: 1px solid #d8d8d8;
+				&.clicked{
+					background-color: #eee;
+				}
+				&:last-of-type{
+					border-bottom: 1px solid #d8d8d8;
+				}
 			}
 			td, th{
 				padding: .4rem 0;
 				text-align: center;
 				vertical-align: middle;
 				width: 30%;
+				&:first-of-type{
+					width: 5%;
+				}
 				&:last-of-type{
-					width: 40%;
+					width: 35%;
 				}
 			}
 			.box{

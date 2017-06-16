@@ -96,12 +96,17 @@ body{
     color: #fff;
     background-color: @baseFontColor;
 }
+.btn-empty:extend(.btn){
+    color: @baseFontColor;
+    border: 1px solid @baseFontColor;
+    background-color: #fff;
+}
 .empty{
     .px2rem(height, 140);
 }
 .footer{
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     bottom: 0;
     left: 0;
     right: 0;
@@ -121,7 +126,7 @@ body{
     box-shadow: 0 0 15px rgba(0,0,0,.5);
     opacity: 1;
     transition: opacity 3s;
-    z-index: 5000;
+    z-index: 5;
 }
 .message-box-success{
     max-width: 250px;

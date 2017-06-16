@@ -80,7 +80,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		z-index: 2;
+		z-index: 1;
 	}
 	.nav{
 		.px2rem(height, 120);

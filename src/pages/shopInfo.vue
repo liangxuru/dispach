@@ -3,9 +3,10 @@
 		<search v-bind:showMenu="false"></search>
 		<section class="list">
 			<div class="f26 title sub">{{spname}}</div>
-			<table class="table bg">
+			<table class="table">
 				<thead class="f26">
-					<tr>
+					<tr class="bg">
+						<th></th>
 						<th>名称</th>
 						<th>饱和量</th>
 						<th>余量</th>
@@ -13,11 +14,12 @@
 					</tr>
 				</thead>
 				<tbody class="f24">
-					<tr v-for="item in items">
+					<tr v-for="(item, index) in items" class="bg" :class="item.clicked?'clicked':''" @click="checked(item, $event)">
+						<td>{{ index + 1 }}</td>
 						<td><div class="box">{{ item.ProductName }}</div></td>
 						<td>{{ item.FullAmount }}</td>
 						<td>{{ item.RemainderAmount }}</td>
-						<td @click="Offshelves(item)"><a class="btn-sm">下架</a></td>
+						<td @click="Offshelves(item, $event)"><a class="btn-sm">下架</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -78,11 +80,12 @@
 					return x.ProductName.indexOf(this.name)>-1
 				}.bind(this));
 			},
-			Offshelves(item){
+			Offshelves(item, event){
 				//下架
 				this.shelves = true;
 				this.info = item;
 				this.count = item.RemainderAmount;
+				event.stopPropagation();
 			},
 			Closeshelves(){
 				this.shelves = false;
@@ -121,6 +124,9 @@
 					this.GetProductList();
 					this.setLoading(false);
 				});
+			},
+			checked(item){
+				this.$set(item, "clicked", !item.clicked);
 			}
 		},
 		created(){
@@ -138,14 +144,23 @@
 			width: 100%;
 			tbody tr{
 				border-top: 1px solid #d8d8d8;
+				&.clicked{
+					background-color: #eee;
+				}
+				&:last-of-type{
+					border-bottom: 1px solid #d8d8d8;
+				}
 			}
 			td, th{
 				padding: .4rem 0;
 				text-align: center;
 				vertical-align: middle;
 				width: 20%;
-				&:first-of-type{
-					width: 40%;
+				&:nth-child(1){
+					width: 5%;
+				}
+				&:nth-child(2){
+					width: 35%;
 				}
 			}
 			.box{

@@ -107,7 +107,12 @@
 				}).then((data)=>{
 					message.success("下架成功！");
 					this.shelves = false;
-					this.loadData();
+					if(this.OperationType === 3){
+						this.items = this.items.filter(p=>p!=this.info);
+					}else{
+						this.info.RemainderAmount -=this.count;
+						this.$set(this.info, "clicked", true);
+					}
 					this.setLoading(false);
 				});
 			},

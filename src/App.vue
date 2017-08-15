@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <transition name="router-fade" mode="out-in">
+      <transition name="fade">
         <router-view></router-view>
       </transition>
       <scale-loader v-bind:loading="isLoading" ref="load"></scale-loader>
@@ -31,3 +31,13 @@ export default {
   }
 }
 </script>
+<style lang="less">
+  .container{
+    &.fade-enter-active, &.fade-leave-active {
+        transition: opacity .5s
+    }
+    &.fade-enter, &.fade-leave-active {
+        opacity: 0
+    }
+  }
+</style>
